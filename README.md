@@ -2,9 +2,9 @@
 <details>
 <summary>🔍 Click to Expand README</summary>
 
-# More Picks: Traits|Civics|Ethics [FLEX EDITION]
+# More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]
 
-Welcome to the Flex Script for the Stellaris Mod "More Picks: Traits|Civics|Ethics [FLEX EDITION]". This script allows you to customize the mod settings without manually editing the configuration files.
+Welcome to the Flex Script for the Stellaris Mod "More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]". This script allows you to customize the mod settings without manually editing the configuration files.
 
 ## Features:
 
@@ -14,15 +14,19 @@ Welcome to the Flex Script for the Stellaris Mod "More Picks: Traits|Civics|Ethi
   
 - **User-Friendly**: No need to manually edit configuration files. Just answer the script's prompts!
 
+- **Standalone Executable**: For ease of use, a standalone `.exe` version is available, allowing users to run the customization tool without needing Python installed.
+
 ## How to Use:
 
-### Pre-compiled (exe/batch version):
+### Pre-compiled `.exe` version:
 
-1. Download the executable version of the script.
+1. Download the `flexScript_easy.exe` from the release section.
   
-2. Run the executable. Follow the on-screen prompts to customize your mod settings.
+2. Double-click to run the executable. A terminal window will open with on-screen prompts.
   
-3. Enjoy the game with your personalized settings!
+3. Follow the prompts to customize your mod settings.
+  
+4. Once finished, close the terminal window and enjoy the game with your personalized settings!
 
 ### Python Script (For advanced users):
 
