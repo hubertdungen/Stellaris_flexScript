@@ -32,7 +32,7 @@ Welcome to the Flex Script for the Stellaris Mod "More Picks & Points: Traits|Ci
 
 1. Ensure you have Python installed on your system.
   
-2. Run the script using the command: `python customize_mod.py`
+2. Run the script using the command: `python flexScript.py`
   
 3. Follow the on-screen prompts to customize your mod settings.
 
