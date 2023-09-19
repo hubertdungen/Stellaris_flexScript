@@ -34,7 +34,7 @@ def find_mod_path():
             if os.path.exists(workshop_path):
                 mods = os.listdir(workshop_path)
                 if mods:  # if there's any mod folder
-                    print("Multiple mods detected. This mod should be code number \"XXXX\". Please ensure you know the mod's specific code.")
+                    print("Multiple mods detected. This mod should be code number \"3038118849\". Please ensure you know the mod's specific code.")
                     print(", ".join(mods))
                     mod_code = input("Enter your mod's specific code: ")
                     return os.path.join(workshop_path, mod_code)
@@ -155,7 +155,7 @@ def modify_mod_files_custom(mod_path):
 
 
 def main_updated():
-    print("Ensure you've downloaded the mod first! Download link: [YOUR LINK HERE]")
+    print("Ensure you've downloaded the mod first! Download link: [https://steamcommunity.com/sharedfiles/filedetails/?id=3038118849]")
     
     mod_path = find_mod_path()
     if not mod_path:
