@@ -4,7 +4,7 @@
 
 # More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]
 
-Welcome to the Flex Script for the Stellaris Mod "More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]". This script allows you to customize the mod settings without manually editing the configuration files.
+Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]](https://steamcommunity.com/sharedfiles/filedetails/?id=3038118849)". This script allows you to customize the mod settings without manually editing the configuration files.
 
 ## Features:
 
