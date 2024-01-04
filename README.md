@@ -1,45 +1,62 @@
+# Flex Script v2.0.0 for Stellaris MPP
 
-<details>
-<summary>🔍 Click to Expand README</summary>
+Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]](https://steamcommunity.com/sharedfiles/filedetails/?id=3038118849)" (MPP). This major update introduces a range of new features, optimizations, and user experience improvements, making the script more intuitive, versatile, and efficient.
 
-# More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]
 
-Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]](https://steamcommunity.com/sharedfiles/filedetails/?id=3038118849)". This script allows you to customize the mod settings without manually editing the configuration files.
+## Features
 
-## Features:
+- **Advanced Path Detection:** Automatically detects game and mod paths, with options for semi-autonomous and manual input.
+- **Server Mode:** Simplified setup for server hosts, facilitating mod synchronization with clients/friends.
+- **Customization Interface:** Streamlined process for adjusting Stellaris MPP game settings.
+- **Efficient Settings Management:** Robust system for loading and saving settings, enhancing responsiveness.
+- **User-Friendly Interaction:** Improved prompts and instructions for a smoother user experience.
+- **Optimized Performance:** Adjusted for faster execution, with modes tailored for different user needs.
+- **Auto-Update Feature:** (Still under development... That option on FS Menu will not work for now) This ensures that the MPP files are always equal to the Stellaris target files.
 
-- **Automatic Mod Path Detection**: The script tries to automatically detect the mod's path on your system.
-  
-- **Customization**: Choose between vanilla, standard (mod default), or custom settings. The script will then modify the mod files accordingly.
-  
-- **User-Friendly**: No need to manually edit configuration files. Just answer the script's prompts!
 
-- **Standalone Executable**: For ease of use, a standalone `.exe` version is available, allowing users to run the customization tool without needing Python installed.
+## Installation
 
-## How to Use:
+1. **Download the Script:** Download `flexScript.py` (or `flexScript.exe` if using the executable version) from the [GitHub repository](<https://github.com/hubertdungen/Stellaris_flexScript>).
+2. **Python Requirements:** If using the Python script, ensure Python is installed on your system. [Download Python](https://www.python.org/downloads/).
 
-### Pre-compiled `.exe` version:
 
-1. Download the `flexScript_easy.exe` from the release section.
-  
-2. Double-click to run the executable. A terminal window will open with on-screen prompts.
-  
-3. Follow the prompts to customize your mod settings.
-  
-4. Once finished, close the terminal window and enjoy the game with your personalized settings!
+## Usage
 
-### Python Script (For advanced users):
+- Run `flexScript.py` using Python, or execute `flexScript.exe` if using the standalone version.
+- Follow the on-screen prompts to locate your Stellaris installation and mod directories.
+- Choose your customization options or use the script's server mode for hosting.
+- Run and Play!
 
-1. Ensure you have Python installed on your system.
-  
-2. Run the script using the command: `python flexScript.py`
-  
-3. Follow the on-screen prompts to customize your mod settings.
 
-## Notes:
+## Server Mode Usage
 
-- It's always a good idea to back up your mod files before running any script to avoid unintentional changes.
+The server mode streamlines the setup process for multiplayer sessions, making it easy to share custom settings with friends:
 
-- If you encounter any issues or bugs, please report them on the GitHub issues page.
+1. **Set Up Your Settings:** First, configure your Flex Script settings to your preference in NORMAL mode (or other than SERVER mode).
+2. **Prepare Server Mode:** Convert your Flex Script into a server-ready version throught the Flex Script Menu. This process adjusts the script to work efficiently for multiplayer sessions.
+3. **Share with Friends:** Distribute the server-ready Flex Script executable (`flexScript.exe`) and the corresponding settings file (`fs_settings.json`) to your friends.
+4. **Easy Client Setup:** Your friends should place both the executable and the settings file in the same directory on their system, anywhere.
+5. **Run and Play:** Have your friends run the `flexScript.exe`. The script will automatically configure their game using the shared settings, ensuring everyone is synchronized for multiplayer gameplay.
 
-</details>
+This mode ensures a quick and hassle-free setup for all players involved in the multiplayer session, providing a smooth and enjoyable gaming experience.
+
+
+## Contributing
+
+Feedback and contributions are welcome. Please feel free to fork the repository, make your changes, and submit a pull request.
+
+
+## Support and Contact
+
+If you encounter any issues or have questions, please [open an issue](https://github.com/hubertdungen/Stellaris_flexScript/issues/new/choose) on GitHub or contact me through the [Steam MPP mod comment section](https://steamcommunity.com/workshop/filedetails/?id=3038118849).
+
+
+## Version History
+
+- **v2.0.0:** Major overhaul with new features and optimizations.
+- Previous versions: See the [changelog](https://github.com/hubertdungen/Stellaris_flexScript/commits/main/) for detailed version history.
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
