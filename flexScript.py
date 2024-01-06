@@ -11,12 +11,13 @@ import shutil
 # Declare IDs, Versions and Mode Variables
 stellaris_id = "281990"          # This might need updating if Stellaris' game id changes
 mod_id = "3038118849"            # This is the mod id that might need updating if the Mod id changes
-flex_v = "1.5"                   # Flex Script version
+flex_v = "2.1.0"                 # Flex Script version
+flex_ab_v = "2.1.0"              # The real constant version of this FS Script
 mod_v = "1"                      # Mod version
 stellaris_v = "3.10.XX"          # Designed for Stellaris Version...
 fs_set_st_v = None               # The version of "Designed for Stellaris Version" that was stored last time on the settings file  // This is intended for troubleshooting
-virgin = False                    # Is it the first time FS is being run?
-fs_mode = "DEBUG"                # NORMAL - Normal mode as it was intended to work /// RUSH - Fast mode, tries to run in the most autonomous & quick way /// DEBUG - Software Dev Mode  // SERVER - Server client ready
+virgin = True                    # Is it the first time FS is being run?
+fs_mode = "NORMAL"                # NORMAL - Normal mode as it was intended to work /// RUSH - Fast mode, tries to run in the most autonomous & quick way /// DEBUG - Software Dev Mode  // SERVER - Server client ready
 previous_fs_mode = "NORMAL"          # The mode that was previously of selecting the SERVER mode...
 
 
@@ -52,7 +53,7 @@ answer = None
 workshop_mod_key = "steamapps/workshop"
 st_confirmation_key = "stellaris.exe"
 descriptor_check = True
-defines_name = "00_defines.txt"                      # The name of the file "00_define.txt"               // in case paradox changes it's name
+defines_name = "00_defines.txt"                     # The name of the file "00_define.txt"               // in case paradox changes it's name
 species_arc_name = "00_species_archetypes.txt"      # The name of the file "00_species_archetypes..txt"  // in case paradox changes it's name
 
 
@@ -90,14 +91,17 @@ header = f"""
 #                                                #
 ##################################################
 
-## MPP v{mod_v} - FS v{flex_v}
-## Designed for Stellaris {stellaris_v}
+## MPP v{mod_v} - FS v{flex_ab_v}
+## Designed for Stellaris {stellaris_v}+
 ## Stellaris id: {stellaris_id} // MPP Mod id: {mod_id}
 
 Flex Script, empowered by the community and crafted with care by Hubert Dungen,
 and with the help of GPT 4, is your gateway to a tailored Stellaris adventure. 
 Our script automates the customization of MPP, ensuring your galactic empire 
 is uniquely yours.
+
+Attention: MPP impacts both player and NPC Empires, enhancing genetic diversity and realism. 
+It is designed for a richer gameplay experience, not as a cheat tool.
 
 Discover my journey and other projects at: https://hubertdungen.com
 To know more about this script visit: https://github.com/hubertdungen/Stellaris_flexScript
@@ -168,7 +172,7 @@ Here are some tips of the {help_parent} menu:
 
 ## Declare help texts
 help_texts = {
-    "find_game_files": (
+    "find_game_folder": (
         "### Help: Find Game Files ###\n"
         "This function searches for the Stellaris game installation directory. "
         "\nIt checks common installation paths and tries to automatically locate the game."
@@ -249,11 +253,11 @@ def display_server_mode_header():
     print("\n##############################################")
     print("#         Flex Script Server Mode Menu        #")
     print("##############################################\n")
-    print("\nServer Mode Active. Limited menu options: ")
     print("                                            ")
     print(" # All files are ready.                     ")
     print(" > You can quit and play Stellaris!         ")
     print("\n                                          ")
+    print("\nServer Mode Active. Limited menu options:\n")
     print("1. Deactivate SERVER Mode                   ")
     print("2. Restart path and variable finding process")
     print("3. Quit Flex Script\n                       ")
@@ -304,7 +308,7 @@ def custom_sleep(duration):
 
 def print_sep(print_p, sep_timer):
     print(print_p)
-    custom_sleep(sep_timer)
+    separator_timer(sep_timer)
 
 
 def misspell_exception():
@@ -337,7 +341,7 @@ def with_history(func):
  ### PATH FINDERS #########################################################################   
 
 @with_history
-def find_game_files(history=None):
+def find_game_folder(history=None):
     """
     # Attempt to find the game directory, workshop content and necessary files
     """
@@ -736,6 +740,59 @@ def find_mod_files(mod_directory, history = None):
 
 
 
+@with_history
+def find_game_files(game_directory, history = None):
+    
+    global defines_name
+    global species_arc_name
+    global defines_van_folder_path
+    global species_van_folder_path
+    
+    
+    if fs_mode == "DEBUG": print(f"DEBUG_mod_files_0:  game_directory:{game_directory} // defines_name:{defines_name} // defines_van_folder_path:{defines_van_folder_path} // species_van_folder_path:{species_van_folder_path} // species_arc_name:{species_arc_name}\n\n")
+    
+    ## DETECT 00_defines.txt
+    defines_van_folder_path = path_file_checker("Stellaris Installation", game_directory, defines_name)
+    if defines_van_folder_path:
+        # Implement logic to assign the mod files
+        if fs_mode == "DEBUG": print(f"DEBUG_mod_files_1:  game_directory:{game_directory} // defines_name:{defines_name} // defines_van_folder_path:{defines_van_folder_path} // species_van_folder_path:{species_van_folder_path} // species_arc_name:{species_arc_name}\n\n")
+
+    
+    ## DETECT 00_species_archetypes.txt
+    species_van_folder_path = path_file_checker("Stellaris Installation", game_directory, species_arc_name)
+    if species_van_folder_path:
+        # Implement logic to assign the mod files
+        if fs_mode == "DEBUG": print(f"DEBUG_mod_files_2:  game_directory:{game_directory} // defines_name:{defines_name} // defines_van_folder_path:{defines_van_folder_path} // species_van_folder_path:{species_van_folder_path} // species_arc_name:{species_arc_name}\n\n")
+
+    
+    if fs_mode == "DEBUG": print(f"DEBUG_mod_files_3:  game_directory:{game_directory} // defines_name:{defines_name} // defines_van_folder_path:{defines_van_folder_path} // species_van_folder_path:{species_van_folder_path} // species_arc_name:{species_arc_name}\n\n")
+
+    
+
+    return defines_van_folder_path, species_van_folder_path
+
+
+
+
+def define_van_files_path():
+    # Declare globals
+    global defines_van_folder_path
+    global species_van_folder_path
+    global defines_van_file_path
+    global species_van_file_path
+    global defines_name
+    global species_arc_name
+    
+    # Paths to the mod files
+    defines_van_file_path = os.path.join(defines_van_folder_path, defines_name)
+    species_van_file_path = os.path.join(species_van_folder_path, species_arc_name) 
+    
+    print(f"Assigned defines vanilla file path at: \"{defines_van_file_path}\"")
+    print(f"Assigned species vanilla file path at: \"{species_van_file_path}\"")
+    separator_timer(2)
+
+    
+
 
 def define_mod_files_path():
     # Declare globals
@@ -749,6 +806,9 @@ def define_mod_files_path():
     # Paths to the mod files
     defines_mod_file_path = os.path.join(defines_mod_folder_path, defines_name)
     species_mod_file_path = os.path.join(species_mod_folder_path, species_arc_name) 
+    
+    
+
     
 
 
@@ -1363,40 +1423,49 @@ def help_prompt(prompt, history):
 def proceed_confirmation(history):
     while True:
         # PROCEED CONFIRMATION
-        prompt = input('\nDo You Want To Proceed? \n\n(yes/no) Answer: ').lower().strip() 
-        
-        prompt = prompt_handler(prompt, history)
-        
-        if prompt in p_continue or prompt in p_yes:
-            separator_timer(1)
-            return prompt
-        
-        elif prompt in p_cancel or prompt in p_no:
-            separator_timer(0)
-            print("### CANCELING THE PROCESS ###")
-            separator_timer(1)
-            return "cancel"
-        
-        elif prompt in p_help or prompt in p_tutorial:
-            help_prompt(prompt, history=history)
-            continue
+        if fs_mode != "SERVER":
+            prompt = input('\nDo You Want To Proceed? \n\n(yes/no) Answer: ').lower().strip() 
             
+            prompt = prompt_handler(prompt, history)
+            
+            if prompt in p_continue or prompt in p_yes:
+                separator_timer(1)
+                return prompt
+            
+            elif prompt in p_cancel or prompt in p_no:
+                separator_timer(0)
+                print("### CANCELING THE PROCESS ###")
+                separator_timer(1)
+                return "cancel"
+            
+            elif prompt in p_help or prompt in p_tutorial:
+                help_prompt(prompt, history=history)
+                continue
+                
+            else:
+                separator_timer(0)
+                print("Unrecognized input. Please answer with 'yes' or 'no'.")
+                separator_timer(1)
         else:
-            separator_timer(0)
-            print("Unrecognized input. Please answer with 'yes' or 'no'.")
-            separator_timer(1)
+            print_sep("SERVER mode is active. Auto accepting...", 1)
+            return "yes"
+            
 
 
 ## IF FS DETECTS THE PATH AUTONOMOUSLY
 def primary_path_question(subject, semi_description, history):
     
     print(f"Shall we assign that path? Is it the correct {subject} path?")
-    path_conf = input(
-        "\n> Press Enter / yes / 1 - Will assign this detected path"
-        f"\n> semi / 2 - Will initiate a semi-autonomous search for the {subject}. \n  {semi_description}."
-        "\n> manual / 3 - Will ask for you to insert the Stellaris Mods path manually."
-        "\n\n(yes/semi/manual) Your answer: " 
-    ).lower()
+    if fs_mode != "SERVER":
+        path_conf = input(
+            "\n> Press Enter / yes / 1 - Will assign this detected path"
+            f"\n> semi / 2 - Will initiate a semi-autonomous search for the {subject}. \n  {semi_description}."
+            "\n> manual / 3 - Will ask for you to insert the Stellaris Mods path manually."
+            "\n\n(yes/semi/manual) Your answer: " 
+        ).lower()
+    else:
+        print_sep("\nSERVER mode is active. Auto accepting...", 1)
+        path_conf = "yes"
     separator_timer(1)
     
     path_conf = prompt_handler(path_conf, history)
@@ -1741,6 +1810,8 @@ def load_settings():
     global auto_update_enabled
     global ethos_max_points, civic_points_base, machine_trait_points
     global machine_max_traits, species_trait_points, species_max_traits
+    
+    global flex_ab_v
 
     try:
         with open('fs_settings.json', 'r') as f:
@@ -1775,6 +1846,11 @@ def load_settings():
         species_max_traits = settings.get("species_max_traits")
         virgin = settings.get("virgin")
         
+        if flex_ab_v != flex_v:
+            print_sep("## WARNING! SETTINGS FILES NOT BUILT FOR THIS FS VERSION!", 3)
+            print(f"The fs_settings.json file you have was built for Flex Script v{flex_v}.")
+            print(f"\nthis Flex Script is version {flex_ab_v}!")
+        
 
     except FileNotFoundError:
         # File doesn't exist, settings will remain at their default values
@@ -1788,14 +1864,19 @@ def load_settings():
 def is_settings_present():
     global fs_settings_present
 
-    # Get the directory of the current script
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Check if the script is running as a frozen executable (e.g., .exe file)
+    if getattr(sys, 'frozen', False):
+        script_dir = os.path.dirname(sys.executable)
+    else:
+        # Otherwise, it's a regular Python script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
     
     # Construct the full path to the settings file
     settings_path = os.path.join(script_dir, 'fs_settings.json')
 
     # Check if the settings file exists
     fs_settings_present = os.path.isfile(settings_path)
+
     
 
 
@@ -1833,6 +1914,8 @@ def check_if_any_custom_is_none():
     global species_trait_points
     global species_max_traits
     
+    is_any_custom_zero = False
+    
     # Check if any variable is None
     variables = [ethos_max_points, civic_points_base, machine_trait_points, machine_max_traits, species_trait_points, species_max_traits]
     
@@ -1840,11 +1923,14 @@ def check_if_any_custom_is_none():
         if fs_mode == "DEBUG": print(f"DEBUG_check_if_any_custom_is_none:  custom_var:{var}")
     
     is_any_custom_none = any(var is None for var in variables)
+    is_any_custom_zero = any(var == 0 for var in variables)
     
-    if is_any_custom_none:
-        if fs_mode == "DEBUG": print("DEBUG:  At least one variable is None")
+    if is_any_custom_zero: is_any_custom_none == True
+    
+    if is_any_custom_none or is_any_custom_zero:
+        if fs_mode == "DEBUG": print("DEBUG:  At least one variable is None or Zero")
     else:
-        if fs_mode == "DEBUG": print("DEBUG:  No variables are None")
+        if fs_mode == "DEBUG": print("DEBUG:  No variables are None or Zero")
 
 
 ####################################################################################
@@ -1873,15 +1959,22 @@ def change_fs_mode():
         "\n            \-> This helps making the process cleaner and quicker."
         "\n                You setup the settings, prepare server and share."
         "\n                Ask your friends to run FS with settings files on the same location."
+        "\n                As this is a manual option, you should go back and toggle the \"auto-update\" feature."
+        "\n                (It's recommended just to go back to Flex Script Menu and chose \"SERVER MODE\"')."
         )
-    
-    new_mode = input("\n\nEnter new mode (NORMAL, FAST, RUSH, DEBUG, SERVER).\n\nNew FS mode: ").upper()
-    separator_timer(1)
-    if new_mode in ["NORMAL", "FAST", "RUSH", "DEBUG", "SERVER"]:
-        fs_mode = new_mode
-        print("Flex Script mode updated to:", fs_mode)
-    else:
-        print("Invalid mode. Please enter a valid mode.")
+    while True:
+        new_mode = input("\n\nEnter new mode (NORMAL, FAST, RUSH, DEBUG, SERVER).\n\nNew FS mode: ").upper()
+        separator_timer(1)
+        if new_mode in ["NORMAL", "FAST", "RUSH", "DEBUG", "SERVER"]:
+            fs_mode = new_mode
+            print("Flex Script mode updated to:", fs_mode)
+            break
+        elif new_mode in p_cancel or new_mode in p_no:
+            print("Returning...")
+            separator_timer(1)
+            return
+        else:
+            print("Invalid mode. Please enter a valid mode.")
     separator_timer(2)
     settings_menu()  # Return to settings menu
 
@@ -1915,17 +2008,30 @@ def toggle_auto_update():
     
     
 def update_mod_files():
-    print("### Updating Mod Files ###")
+    print_sep("### Updating Mod Files ###", 2)
+    
+    if not auto_update_enabled:
+        print("This process will copy the vanilla '00_defines.txt' and '00_species_archetypes.txt'"
+              "\nfiles from the Stellaris installation directory. It then pastes them into the"
+              "\nmod's respective folders, overwriting the existing mod files. After this,"
+              "\na 'find and replace' operation updates the files with the values you've customized"
+              "\nthrough Flex Script."
+              "\n\nEssentially, this ensures that the mod files contain exactly what's in the"
+              "\nvanilla files, plus your customizations."
+              "\n\nAre you sure you want to continue?"
+              "\n\n")
+        proceed_confirmation(history=None)
+        separator_timer(2)
 
     # Check if the necessary file paths are available
     if not all([defines_van_file_path, species_van_file_path, defines_mod_file_path, species_mod_file_path]):
-        print("Error: Necessary file paths are not set.")
+        print_sep("Error: Necessary file paths are not set.", 2)
         separator_timer(1)
         return
 
     # Check if vanilla files exist
     if not os.path.exists(defines_van_file_path) or not os.path.exists(species_van_file_path):
-        print("Error: Vanilla files not found.")
+        print_sep("Error: Vanilla files not found.", 2)
         separator_timer(1)
         return
 
@@ -1933,7 +2039,7 @@ def update_mod_files():
         # Copy vanilla files to mod directory
         shutil.copy(defines_van_file_path, defines_mod_file_path)
         shutil.copy(species_van_file_path, species_mod_file_path)
-        print("Vanilla files copied to mod directory.")
+        print("Vanilla files copied to mod directory.", 2)
 
         # Update the mod files with current customizations
         # Assuming modify_value_in_file function exists and works as intended
@@ -1944,7 +2050,7 @@ def update_mod_files():
         modify_value_in_file(species_mod_file_path, "@species_trait_points", species_trait_points)
         modify_value_in_file(species_mod_file_path, "@species_max_traits", species_max_traits)
 
-        print("Mod files updated with current customizations.")
+        print_sep("Mod files updated with current customization values.", 2)
         separator_timer(2)
     
     except Exception as e:
@@ -1959,22 +2065,36 @@ def prepare_for_server_clients():
     print("#       Preparing for Server Clients         #")
     print("##############################################\n")
 
+    print("This mode configures Flex Script for server hosting, ensuring")
+    print("all clients (your friends) have consistent mod settings.")
+    print("\nIn SERVER mode, Flex Script enables auto-updates and")
+    print("prepares a configuration file for easy distribution.")
+    print("After completing this process, share the Flex Script and")
+    print("fs_settings.json with your server clients for a harmonized multiplayer experience.\n\n\n")
+
+
+    # Confirmation to proceed
+    proceed = proceed_confirmation(history=None)
+    if proceed not in p_yes or proceed not in p_continue:
+        print_sep("Process cancelled. Returning to the previous menu.", 2)
+        return
+    separator_timer(3)
+
     # Set fs_mode to SERVER and enable auto-update
     original_fs_mode = fs_mode
     fs_mode = "SERVER"
     auto_update_enabled = True
 
-    print("Flex Script is being prepared for server client use.")
-    separator_timer(2)
-    print("Mode has been set to SERVER and auto-update is enabled.")
+    print_sep("Flex Script is being prepared for server client use.", 2)
+    print_sep("FS Mode has been set to SERVER and auto-update is enabled.", 2)
 
     # Assuming save_settings() function saves the current state to fs_settings.json
     try:
         save_settings()
-        print("Current settings saved. Flex Script is ready for server client use.")
-        separator_timer(3)
+        print_sep("Current settings saved. Flex Script is ready for server client use.", 3)
+        print_sep("You can now send a copy of this FS and Settings to your friends!", 3)
     except Exception as e:
-        print(f"Error saving settings: {e}")
+        print(f"ERROR saving settings: {e}")
         separator_timer(2)
         fs_mode = original_fs_mode  # Revert fs_mode on error
         return
@@ -1988,6 +2108,7 @@ def prepare_for_server_clients():
         save_settings()  # Save the settings again after reverting mode
     else:
         print("Continuing in SERVER mode.")
+    separator_timer(2)
         
 
     # Return to main menu or perform other actions as needed
@@ -2025,6 +2146,34 @@ def reset_settings_to_default():
     separator_timer(2)
     
     
+def update_defines_name():
+    global defines_name
+    defines_name = input("Enter the new name for the Defines file\nincluding the filetype suffix (e.g., '00_defines.txt').\n\nNew name: ").strip()
+    separator_timer(2)
+    print(f"Defines file name updated to {defines_name}.")
+    separator_timer(2)
+    save_settings()
+    
+
+def update_species_arc_name():
+    global species_arc_name
+    species_arc_name = input("Enter the new name for the Species Archetypes file\nincluding the filetype suffix (e.g., '00_species_archetypes.txt').\n\n New name: ").strip()
+    separator_timer(2)
+    print(f"Species Archetypes file name updated to {species_arc_name}.")
+    separator_timer(2)
+    save_settings()
+    
+
+def update_st_confirmation_key():
+    global st_confirmation_key
+    st_confirmation_key = input("Enter the new Stellaris confirmation key (e.g., 'stellaris.exe'): ").strip()
+    separator_timer(2)
+    print(f"Stellaris confirmation key updated to {st_confirmation_key}.")
+    separator_timer(2)
+    save_settings()
+    
+    
+    
 ####################################################################################
 
 
@@ -2037,9 +2186,9 @@ def reset_settings_to_default():
 
 @with_history
 def main_menu(history):
-
-        
+    
     while True:    
+        separator_timer(0)
         global fs_mode, previous_fs_mode
 
         # Display a different header based on the current mode
@@ -2088,12 +2237,13 @@ def main_menu(history):
                 main_customization()  # Customization menu
             elif choice in ["3", "print_header", "p_header", "print header"]:
                 print(header)  # Initial software header
-                proceed_confirmation()
+                proceed_confirmation(history=history)
                 main_menu()  # Return to main menu
             elif choice == "4" or choice in print_tut:
                 # help_prompt("print_tut", history=history)
-                print_tut()
+                print(tutorial)
                 separator_timer(2)
+                proceed_confirmation(history)
                 main_menu()  # Return to main menu
             elif choice == "5" or choice in p_settings:
                 settings_menu()  # Settings menu (to be implemented)
@@ -2121,6 +2271,7 @@ def main_menu(history):
 @with_history
 def main_customization(history=None):
     while True:
+        separator_timer(0)
         display_customization_header()  # Display the header
         custom_sleep(4)
         display_values_table()  # Display the value tables
@@ -2150,52 +2301,62 @@ def main_customization(history=None):
             return True
         elif setting == "return":
             if is_any_custom_none:
-                print("This is not possible to do since there are MPP Customizable variables that have null values...\n\nPlease choose a preset of customize it at your taste.")
+                print("This is not possible to do since there are MPP Customizable variables that have null or zero values...\n\nPlease choose a preset of customize it at your taste.")
                 continue
             return
         else:
-            main_menu()    
+            main_menu()   
+    separator_timer(1)
+    
     
     
     
 def settings_menu():
-    global fs_mode
-    print("\n##############################################")
-    print("#              Flex Script Settings          #")
-    print("##############################################\n")
-    print("Choose an option to modify Flex Script settings:\n")
-    print("1. Change Flex Script Mode (NORMAL, FAST, RUSH, DEBUG, SERVER)")
-    print("   Or directly enter a mode (e.g., 'NORMAL', 'DEBUG')")
-    print("2. Update Stellaris Game ID")
-    print("3. Update Mod ID")
-    print("4. Toggle Auto-Update Feature")
-    print("5. Return to Main Menu\n")
-
-
-    valid_modes = ["NORMAL", "FAST", "RUSH", "DEBUG", "SERVER"]
-    choice = input("\n\nEnter your choice (1-5) or a mode: ").strip().upper()
+    while True:
+        global fs_mode
+        print("\n##############################################")
+        print("#            Flex Script Settings            #")
+        print("##############################################\n")
+        print("Choose an option to modify Flex Script settings:\n")
+        print("1. Change Flex Script Mode (NORMAL, FAST, RUSH, DEBUG, SERVER)")
+        print("    \-> Or directly enter a mode (e.g., 'NORMAL', 'DEBUG')")
+        print("2. Update Stellaris Game ID")
+        print("3. Update Mod ID")
+        print("4. Toggle Auto-Update Feature")
+        print("5. Update Defines File Name")
+        print("6. Update Species Archetypes File Name")
+        print("7. Update Stellaris Confirmation Key")
+        print("8. Return to Main Menu\n")
     
-    
-    if choice in valid_modes:
-        fs_mode = choice
-        separator_timer(1)
-        print(f"Flex Script mode changed to {fs_mode}.")
-        separator_timer(2)
-        save_settings()  # Save the new mode setting
-    elif choice == "1":
-        change_fs_mode()  # Change Flex Script Mode
-    elif choice == "2":
-        update_stellaris_id()  # Update Stellaris Game ID
-    elif choice == "3":
-        update_mod_id()  # Update Mod ID
-    elif choice == "4":
-        toggle_auto_update()  # Toggle Auto-Update
-    elif choice == "5":
-        return  # Return to Main Menu
-    else:
-        print("Invalid choice, please try again.")
-        settings_menu()  # Re-display settings menu
-    return
+        valid_modes = ["NORMAL", "FAST", "RUSH", "DEBUG", "SERVER"]
+        choice = input("\n\nEnter your choice (1-8) or a mode: ").strip().upper()
+        
+        if choice in valid_modes:
+            fs_mode = choice
+            separator_timer(1)
+            print(f"Flex Script mode changed to {fs_mode}.")
+            separator_timer(2)
+            save_settings()  # Save the new mode setting
+        elif choice == "1":
+            change_fs_mode()  # Change Flex Script Mode
+        elif choice == "2":
+            update_stellaris_id()  # Update Stellaris Game ID
+        elif choice == "3":
+            update_mod_id()  # Update Mod ID
+        elif choice == "4":
+            toggle_auto_update()  # Toggle Auto-Update
+        elif choice == "5":
+            update_defines_name()  # Update Defines File Name
+        elif choice == "6":
+            update_species_arc_name()  # Update Species Archetypes File Name
+        elif choice == "7":
+            update_st_confirmation_key()  # Update Stellaris Confirmation Key
+        elif choice == "8":
+            return  # Return to Main Menu
+        else:
+            print("Invalid choice, please try again.")
+            separator_timer(1)
+            settings_menu()  # Re-display settings menu
 
 
 ####################################################################################
@@ -2216,7 +2377,11 @@ def main_updated():
     global is_any_custom_none
     global virgin
     global fs_mode
+    global any_settings_alteration
+    global auto_update_enabled
     register_problems = False
+    any_settings_alteration = False
+    
     
     # audio_process("play", 0.5)
     
@@ -2230,9 +2395,7 @@ def main_updated():
     separator_timer(2)
     
     
-    ## IS IT THE FIRST TIME? 
-    ## YES? THEN TUTORIAL!
-    first_time_run_prompt()  ## Is this the first time this software is running on your computer?
+
 
 
     ## ATTEMPT TO LOAD FS_SETTINGS.JS
@@ -2240,12 +2403,20 @@ def main_updated():
     if fs_settings_present:
         load_settings()
         virgin = False
-        print("fl_settings.jason has been successfully loaded....")
+        print_sep("fl_settings.jason has been successfully loaded....",1)
+        print(f"Loaded FS Mode: {fs_mode}...")
         separator_timer(1)
+        
     else:
         print("Because it's the first time you're running this FS \nand/or because the fs_settings.jason file isn't in the same directory as flexScript...")
         print("\nFS has to start the PATH DETECTION PROCESS...")
+        any_settings_alteration = True
         separator_timer(3)
+        
+        
+    ## IS IT THE FIRST TIME? 
+    ## YES? THEN TUTORIAL!
+    first_time_run_prompt()  ## Is this the first time this software is running on your computer?
         
     
     ## STELLARIS DIRECTORY FINDING PROCESS
@@ -2256,25 +2427,32 @@ def main_updated():
     if game_directory: check_path = path_checker("Stellaris Installation", game_directory, st_confirmation_key)
     # if there is an error on the checked path or if it as no data... Starts the process...
     if check_path is None or game_directory is None:    
-
+        
+        any_settings_alteration = True
         print("\n### ATTEMPTING TO AUTOMATICALLY DETECT YOUR STELLARIS INSTALLATION FOLDER ###")   
         separator_timer(2)
      
-        game_directory = find_game_files()
+        game_directory = find_game_folder()
         if game_directory:
             assigning_path_suc_message(game_directory)   
         else:
             assigning_path_unc_message("Stellaris Installation")
             register_problems = True
+    else:
+        separator_timer(2)
     
     
     ## MPP MOD DIRECTORY FINDING PROCESS
     separator_timer(0)
     print("### PART TWO")
-    if steam_mods_directory: mod_directory = path_checker("Stellaris Mods", steam_mods_directory, mod_id)
+    part_two_error = False
+    if steam_mods_directory and mod_directory: mod_directory = path_checker("Stellaris Mods", steam_mods_directory, mod_id)
+    else: part_two_error = True, print_sep("There was a error loading the Steam mods or MPP mod directory path...\n\nWe need to start the MPP Mod folder finding process...", 2)
     # if there is an error on the checked path or if it as no data... Starts the process...
-    if mod_directory is None or steam_mods_directory is None:    
+    if mod_directory is None or mod_directory == "" or steam_mods_directory is None or steam_mods_directory == "" or part_two_error:    
 
+        any_settings_alteration = True
+        part_two_error = False
         print("\n### ATTEMPTING TO AUTOMATICALLY DETECT YOUR STELLARIS MPP MOD FOLDER ###")   
         separator_timer(2)
         mod_directory = find_mod_folder()
@@ -2284,11 +2462,29 @@ def main_updated():
         else:
             assigning_path_unc_message("Stellaris Mod Path")
             register_problems = True
-      
+    else:
+        separator_timer(2)
+    
+        
+    ## STELLARIS FILES FINDING PROCESS
+    separator_timer(0)   
+    print("### PART THREE")
+    print("\n### ATTEMPTING TO AUTOMATICALLY DETECT STELLARIS \"VANILLA\" FILES ###")   
+    separator_timer(1)
+    defines_van_folder_path, species_van_folder_path = find_game_files(game_directory)
+    if defines_van_folder_path and species_van_folder_path:
+        subject_message = defines_van_folder_path + " and " + species_van_folder_path
+        assigning_path_suc_message(subject_message) 
+        if fs_mode == "DEBUG": print(f"DEBUG_PARTTWO_0: defines_van_folder_path:{defines_van_folder_path} // species_van_folder_path:{species_van_folder_path}")
+        define_van_files_path()
+    else:
+        assigning_path_unc_message("Stellaris Vanilla Files Path")
+        register_problems = True
+        
         
     ## MPP FILES FINDING PROCESS
     separator_timer(0)   
-    print("### PART THREE")
+    print("### PART FOUR")
     print("\n### ATTEMPTING TO AUTOMATICALLY DETECT MPP FILES ###")   
     separator_timer(1)
     defines_mod_folder_path, species_mod_folder_path = find_mod_files(mod_directory)
@@ -2297,17 +2493,20 @@ def main_updated():
         assigning_path_suc_message(subject_message) 
         if fs_mode == "DEBUG": print(f"DEBUG_PARTTWO_0: defines_mod_folder_path:{defines_mod_folder_path} // species_mod_folder_path:{species_mod_folder_path}")
     else:
-        assigning_path_unc_message("Stellaris Mod Path")
+        assigning_path_unc_message("Stellaris Mod MPP Files Path")
         register_problems = True
-    
-    
+ 
+        
     ## MPP MOD CUSTOMIZATION PROCESS
     separator_timer(0)
-    print("### PART FOUR")
+    print("### PART FIVE")
+    print_sep("\n### ATTEMPTING TO AUTOMATICALLY ASSIGN MPP CUSTOMIZATION VALUES ###",2)   
     check_if_any_custom_is_none()
+    customization_succeeded = False
     if is_any_custom_none == True:
-        
-        if not virgin and fs_settings_present: separator_timer(1), print("At least one of the customization variable is null in fs_settings..."), separator_timer(2) 
+        any_settings_alteration = True
+        customization_succeeded = False
+        if not virgin and fs_settings_present: separator_timer(1), print("At least one of the customization variable is null or zero in fs_settings..."), separator_timer(2) 
         print("\n### INITIATING MPP CUSTOMIZATION PROCESS ###")   
         separator_timer(2)
         customization_succeeded = main_customization()
@@ -2324,41 +2523,59 @@ def main_updated():
             separator_timer(2)
             print("Don't worry...")
             separator_timer(1)
-            print("You can set them later, or set on the jason settings file and reload flexScript...")
+            print("You can set them now, and change them later on FS Menu or set on the jason settings file...")
             separator_timer(3)
             print("Thinking...")
             separator_timer(1)
             register_problems = True
-            
+
+    else:
+        customization_succeeded = True
+        print_sep("Customization values loaded successfully!", 1)
+
+        
     separator_timer(1)        
     
     
+    ## ATTEMPT AUTO-UPDATE
+    if auto_update_enabled:
+        print_sep("### ATTEMPTING TO AUTO-UPDATE MPP...", 1)
+        try:
+            virgin = False
+            update_mod_files()
+            print_sep("MPP files updated successfully!", 2)
+        except Exception as e:
+            print("### ERROR: UPDATE NOT POSSIBLE")
+            print(f"Something went wrong while updating...\n\nError: {e}")
+            separator_timer(4)
+            register_problems = True
+    
+    
+    
     ## ATTEMPT SAVING
-    print("### ATTEMPTING TO SAVE SETTINGS FILE...")
-    separator_timer(1)
-    try:
-        virgin = False
-        save_settings()
-        print("fs_settings.jason has been saved successfully!")
-        separator_timer(2)
-    except Exception as e:
-        print("### ERROR: SAVING")
-        print(f"Something went wrong while saving...\n\nError: {e}")
-        separator_timer(4)
-        register_problems = True
-    
-    
-    ## IF NO ERRORS
-    if not register_problems:
-        print("Congratulations!")
+    if register_problems or virgin or customization_succeeded or any_settings_alteration:
+        print("### ATTEMPTING TO SAVE SETTINGS FILE...")
         separator_timer(1)
-        print("Everything is set!")
-        separator_timer(1)
-        print("Now you can play or checkout the flexScript menu for more features!")
-        separator_timer(2)
+        try:
+            virgin = False
+            save_settings()
+            print_sep("fs_settings.jason has been saved successfully!", 2)
+        except Exception as e:
+            print("### ERROR: SAVING")
+            print(f"Something went wrong while saving...\n\nError: {e}")
+            separator_timer(4)
+            register_problems = True
+        
+        
+        ## IF NO ERRORS
+        if not register_problems:
+            print_sep("Congratulations!", 1)
+            print_sep("Everything is set!", 1)
+            print_sep("Now you can play or checkout the flexScript menu for more features!", 2)
+        else:
+            print_sep("Something went wrong with this process\n\nYou should check out what happened throught the FS Menu, troubleshoot or contact us on the steam mod link...", 4)
     
-    print("Calling Flex Script Menu...")
-    separator_timer(1)
+    print_sep("Calling Flex Script Menu...", 1)
     
 
 if __name__ == "__main__":
