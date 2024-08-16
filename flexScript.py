@@ -11,8 +11,8 @@ import shutil
 # Declare IDs, Versions and Mode Variables
 stellaris_id = "281990"          # This might need updating if Stellaris' game id changes
 mod_id = "3038118849"            # This is the mod id that might need updating if the Mod id changes
-flex_v = "2.1.0"                 # Flex Script version
-flex_ab_v = "2.1.0"              # The real constant version of this FS Script
+flex_v = "2.1.1"                 # Flex Script version
+flex_ab_v = "2.1.1"              # The real constant version of this FS Script
 mod_v = "1"                      # Mod version
 stellaris_v = "3.10.XX"          # Designed for Stellaris Version...
 fs_set_st_v = None               # The version of "Designed for Stellaris Version" that was stored last time on the settings file  // This is intended for troubleshooting
