@@ -132,7 +132,7 @@ Here are some tips to ensure a smooth experience:
 - User-Friendly Questions: The script asks clear, straightforward questions. 
   It intelligently interprets your responses, normalizing text and removing extra spaces.
   Responses have multiple valid forms for your convenience, some doesn't even appear on 
-  the descprition suggestions but are intuitive.
+  the description suggestions but are intuitive.
 
 - Sequential Approach: Simply follow the script's prompts one by one. 
   There's no need to rush; each step guides you through the customization process.
@@ -211,7 +211,7 @@ help_texts = {
         "### Help: Main Menu ###\n"
         "The main menu provides a central hub for navigating Flex Script's features. "
         "Here's a breakdown of the options available:\n"
-        "1. Restart: Reinitiates the entire path finding and customization process.\n"
+        "1. Restart: Resets the entire path finding and customization process.\n"
         "2. Customization Menu: Access the customization interface for Stellaris MPP mod.\n"
         "3. Initial Header: Displays the initial header and information about Flex Script.\n"
         "4. Tutorial: Shows a detailed tutorial to guide new users through Flex Script.\n"
@@ -420,7 +420,7 @@ def find_game_folder(history=None):
                     separator_timer(2)
                     
                     ## CALL SECONDARY PATH QUESTION
-                    prompt = secondary_path_question("Stellaris instalation", "You will provide the drive letter where you think Stellaris is installed, and FS will search there", history)
+                    prompt = secondary_path_question("Stellaris installation", "You will provide the drive letter where you think Stellaris is installed, and FS will search there", history)
                     
                     if prompt in p_yes or prompt in p_semi or prompt == "1":
                         game_directory = semiautonomous_search_ui("Stellaris game", searched_subject, confirmation_file)
@@ -449,7 +449,7 @@ def find_game_folder(history=None):
                         misspell_exception()             
                         
                     
-                else:                               # If semiauto was optionally choosed 
+                else:                               # If semiauto was optionally chosen 
                     print("## You have selected semiautonomous Stellaris path search. ##")
                     optional_semi_search = False
                     game_directory = semiautonomous_search_ui("Stellaris", searched_subject, confirmation_file)
@@ -561,7 +561,7 @@ def find_mod_folder(history=None):
                     prompt = input(
                         "\n> Enter the ID - It will check if that ID is inside {path}."
                         "\n> Press Enter / manual / cancel / 2 - Will ask for you to insert the entire MPP Mod folder entirely."
-                        "\n> retry / 3 - Will retry the fully autonomous search. (only usefull if you have changed the Steam folder path"
+                        "\n> retry / 3 - Will retry the fully autonomous search. (only useful if you have changed the Steam folder path"
                         "\n\n(ID/manual/retry) Answer:  " 
                     ).lower()
                     separator_timer(1)
@@ -647,7 +647,7 @@ def find_mod_folder(history=None):
                             
                         
                         
-                    else:                               # If semiauto was optionally choosed 
+                    else:                               # If semiauto was optionally chosen 
                         print("## You have selected semiautonomous MPP Mod path search. ##")
                         optional_semi_search = False
                         mod_directory = semiautonomous_search_ui("Stellaris MPP Mod", stellaris_id, confirmation_key)
@@ -825,7 +825,7 @@ def define_mod_files_path():
 
 
 
- ### SEARCH ENGINERS & PATH INSERTORS ##############################################################       
+ ### SEARCH ENGINEERS & PATH INJECTORS ####################################################       
 
 @with_history
 def semiautonomous_search_ui(subject, searched_subject, confirmation_path, history=None):
@@ -840,7 +840,7 @@ def semiautonomous_search_ui(subject, searched_subject, confirmation_path, histo
     while True:
 
             
-            ## Confirmating the user wants to continue
+            ## Confirming the user wants to continue
             separator_timer(0)
             print("### WARNING! ###")
             custom_sleep(1)
@@ -982,7 +982,7 @@ def insert_path_manually(subject_var, text_path, text_exception, confirmation_pa
         print(f"The path you have inserted looks like this:\n.\n{path}\n.\n")
         
         
-        ## ASKING FOR CONFIRMATING THE PATH
+        ## ASKING FOR CONFIRMATION THE PATH
         ## Proceed confirmation
         prompt = proceed_confirmation(history)
         if prompt in p_cancel or prompt in p_no:
@@ -1161,7 +1161,7 @@ def search_subject_in_drive(drive_letter, search_subject, descriptor_check=True)
 
     
     except PermissionError:
-        # Catch any perimission exception that might occur during the os.walk
+        # Catch any permission exception that might occur during the os.walk
         separator_timer(0)
         print("### PERMISSION ERROR ###")
         custom_sleep(1)
@@ -1311,7 +1311,7 @@ def cancel_message(prompt):
 def reset(prompt):
     if prompt in p_reset:
         separator_timer(1)
-        print("### RESETING! ###")
+        print("### RESETTING! ###")
         separator_timer(2)
         main_updated()
     else:
@@ -1358,6 +1358,9 @@ def help_prompt(prompt, history):
             
             prompt == "p_tutorial"
             return prompt 
+        
+        elif prompt in p_manual or prompt in p_semi:
+            return prompt
         
         elif prompt in p_tutorial:
             separator_timer(1)
@@ -1462,7 +1465,7 @@ def primary_path_question(subject, semi_description, history):
             f"\n> semi / 2 - Will initiate a semi-autonomous search for the {subject}. \n  {semi_description}."
             "\n> manual / 3 - Will ask for you to insert the Stellaris Mods path manually."
             "\n\n(yes/semi/manual) Your answer: " 
-        ).lower()
+        ).lower().strip()
     else:
         print_sep("\nSERVER mode is active. Auto accepting...", 1)
         path_conf = "yes"
@@ -1478,17 +1481,17 @@ def primary_path_question(subject, semi_description, history):
 def secondary_path_question(subject, semi_description, history):
     
     print("Would you like to follow a semi-autonomous way starting by searching a specific drive for the {subject} path or do you want to insert it manually?")
-    prompt = input(
+    path_conf = input(
         "\n> semi / 1 - Will initiate a semi-autonomous search for the Stellaris folder. \n  {semi_description}."
         "\n> manual / 2 - Will ask for you to insert the path manually."
-        "\n> retry / 3 - Will retry the fully autonomous search. \n  (only usefull if you have changed installation folder path)"
+        "\n> retry / 3 - Will retry the fully autonomous search. \n  (only useful if you have changed installation folder path)"
         "\n\n(semi/manual/retry) Your answer:  " 
-    ).lower()
+    ).lower().strip()
     separator_timer(1)
     
-    prompt = prompt_handler(answer, history)
+    path_conf = prompt_handler(path_conf, history)
     
-    return prompt
+    return path_conf
 
 
 
@@ -1499,7 +1502,7 @@ def assigning_path_suc_message(path):
 
 
 
-## UNSUCCEDED MESSAGE
+## UNSUCCESSFUL MESSAGE
 def assigning_path_unc_message(subject):
     print(f"### There was a problem registering {subject} path! \n\n### You can try to register it manually after this process via the menu...")
     print("Or you can ask for help on the steam MPP mod link at: \n\n# https://steamcommunity.com/workshop/filedetails/?id=3038118849")
@@ -2227,7 +2230,7 @@ def main_menu(history):
             choice = input("Enter your choice (1-10): ").strip()
             separator_timer(1)
             if choice == "1" or choice in p_reset:
-                print ("### WARNING!\n\nYou have choosen to reset the settings file.\nThis will reset paths and customization values on that file and restart the whole process...\n")
+                print ("### WARNING!\n\nYou have chosen to reset the settings file.\nThis will reset paths and customization values on that file and restart the whole process...\n")
                 answer = proceed_confirmation(history)
                 if answer in p_yes or answer in p_continue and not (answer in p_cancel or answer in p_no):
                     reset_settings_to_default()  # Reset the settings to default
@@ -2511,7 +2514,7 @@ def main_updated():
         separator_timer(2)
         customization_succeeded = main_customization()
         if customization_succeeded:
-            print("# Values submited")
+            print("# Values submitted")
             separator_timer(1)
             print("### CUSTOMIZATION PROCESS's DONE!")
             separator_timer(2)
@@ -2573,7 +2576,7 @@ def main_updated():
             print_sep("Everything is set!", 1)
             print_sep("Now you can play or checkout the flexScript menu for more features!", 2)
         else:
-            print_sep("Something went wrong with this process\n\nYou should check out what happened throught the FS Menu, troubleshoot or contact us on the steam mod link...", 4)
+            print_sep("Something went wrong with this process\n\nYou should check out what happened through the FS Menu, troubleshoot or contact us on the steam mod link...", 4)
     
     print_sep("Calling Flex Script Menu...", 1)
     
