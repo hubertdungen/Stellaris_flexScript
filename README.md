@@ -12,6 +12,7 @@ Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|C
 - **User-Friendly Interaction:** Improved prompts and instructions for a smoother user experience.
 - **Optimized Performance:** Adjusted for faster execution, with modes tailored for different user needs.
 - **Auto-Update Feature:** This feature ensures that the MPP files are always equal to the Stellaris target files.
+- **Steam Publishing:** After auto-updating, an admin can upload the mod directly to Steam using `steamcmd`.
 
 
 ## Installation
@@ -26,6 +27,23 @@ Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|C
 - Follow the on-screen prompts to locate your Stellaris installation and mod directories.
 - Choose your customization options.
 - Run and Play!
+
+### Publishing to Steam
+
+Flex Script can upload the mod to Steam Workshop after an auto-update. This requires Valve's command line tool [`steamcmd`](https://developer.valvesoftware.com/wiki/SteamCMD).
+
+#### Installing SteamCMD
+- **Windows**: double-click the bundled `install_steamcmd.bat`. It downloads `steamcmd.zip`, extracts it into a `steamcmd` folder next to the batch file and runs the initial setup.
+- **Linux**: run `install_steamcmd.sh` (requires `curl` and `tar`). SteamCMD will be placed in a `steamcmd` folder alongside the script.
+
+Ensure the SteamCMD directory is on your `PATH` or note its full path for later use.
+
+#### Publishing
+1. Set the environment variables `STEAM_USERNAME` and `STEAM_PASSWORD` for the Steam account that owns the mod (the script will prompt if unset).
+2. Run Flex Script and let the auto-update complete. Once finished, the menu reveals a `PUBLISH: Upload mod to Steam` option.
+3. Select the publish option. Flex Script creates a `workshop_build.vdf` with the necessary `appid`, `publishedfileid`, and `contentfolder`, then runs `steamcmd +login <user> <password> +workshop_build_item workshop_build.vdf +quit` to upload the mod files.
+
+For more information consult Valve's [Workshop Publishing](https://developer.valvesoftware.com/wiki/Workshop_Publishing) guide.
 
 
 ## Server Mode Usage
