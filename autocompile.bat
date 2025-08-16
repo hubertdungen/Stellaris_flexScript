@@ -10,6 +10,7 @@ for %%i in (flexScript*.py) do (
 
 if not defined SCRIPT (
     echo No flexScript*.py file found.
+
     goto end
 )
 
@@ -22,6 +23,7 @@ if errorlevel 1 (
         echo     pip install pyinstaller
         goto end
     )
+
 )
 
 pyinstaller --noconfirm --onefile --name flexScripy "!SCRIPT!"
@@ -38,3 +40,4 @@ echo Build complete. The executable can be found in the dist folder.
 :end
 echo.
 pause
+
