@@ -16,14 +16,17 @@ if not defined SCRIPT (
 
 where pyinstaller >nul 2>nul
 if errorlevel 1 (
-    echo PyInstaller not found. Install it with:
-    echo     pip install pyinstaller
-    goto end
+    echo PyInstaller not found. Installing...
+    python -m pip install --quiet pyinstaller
+    if errorlevel 1 (
+        echo Failed to install PyInstaller. Install it manually with:
+        echo     pip install pyinstaller
+        goto end
+    )
 
 )
 
 pyinstaller --noconfirm --onefile --name flexScripy "!SCRIPT!"
-
 
 if errorlevel 1 (
     echo.
