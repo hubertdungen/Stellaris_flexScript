@@ -80,7 +80,7 @@ p_settings = ["settings", "config", "configuration file", "fs_settings"]
 print_tut = ["print_tutorial", "print tutorial", "p_tutorial", "p tutorial"]
 
 
-## Delcare headers
+## Declare headers
 header = f"""
 ##################################################
 #                                                #
@@ -395,7 +395,7 @@ def find_game_folder(history=None):
                         break
                     
                     elif path_conf in p_manual or path_conf == "3":                             # Manually apply folder
-                        game_directory = insert_path_manually("Stellaris installation", "\"C:/Program Files (x86)/Steam/steamapps/common/Stellaris/\"", "Please ensure you have provided the correct path.", "stellaris.exe")  # 1st var: Content  \\ 2nd var: PATH  \\ 3rd var: Exception error alert  \\ 4rd var: confirmation_file which can be Stellaris exe file f.ex.
+                        game_directory = insert_path_manually("Stellaris installation", "\"C:/Program Files (x86)/Steam/steamapps/common/Stellaris/\"", "Please ensure you have provided the correct path.", "stellaris.exe")  # 1st var: Content  \\ 2nd var: PATH  \\ 3rd var: Exception error alert  \\ 4th var: confirmation_file which can be Stellaris exe file f.ex.
                         separator_timer(1)
                         if game_directory == "cancel" or game_directory == None:
                             game_directory == None
@@ -430,7 +430,7 @@ def find_game_folder(history=None):
                         return game_directory
                         
                     elif prompt in p_manual or prompt in p_no or prompt in ["other", "2"]:
-                        game_directory = insert_path_manually("Stellaris installation", "\"C:/Program Files (x86)/Steam/steamapps/common/Stellaris/\"", "Please ensure you have provided the correct path.", "stellaris.exe")  # 1st var: Content  \\ 2nd var: PATH  \\ 3rd var: Exception error alert  \\ 4rd var: confirmation_file which can be Stellaris exe file f.ex.
+                        game_directory = insert_path_manually("Stellaris installation", "\"C:/Program Files (x86)/Steam/steamapps/common/Stellaris/\"", "Please ensure you have provided the correct path.", "stellaris.exe")  # 1st var: Content  \\ 2nd var: PATH  \\ 3rd var: Exception error alert  \\ 4th var: confirmation_file which can be Stellaris exe file f.ex.
                         separator_timer(1)
                         if game_directory == "cancel" or game_directory == None:
                             game_directory == None
@@ -524,7 +524,7 @@ def find_mod_folder(history=None):
                         break
                     
                     elif path_conf in p_manual or path_conf == "3":                             # Manually apply folder                      
-                        mod_directory = insert_path_manually("Steamapps -> Workshop -> Content folder", "\"C:/Program Files (x86)/Steam/steamapps/workshop/content/", "Please ensure you have provided the correct \"Steam\" / \"steamapps/\" \"workshop/\" \"content/\" path.\nThis is not to insert the MPP's Mod path directly\nBut to point where the stellaris workshop mods are located.", confirmation_folder).strip()  # 1st var: Content  \\ 2nd var: PATH  \\ 3rd var: Exception error alert  \\ 4rd var: confirmation_file which can be Stellaris MPP folder f.ex.
+                        mod_directory = insert_path_manually("Steamapps -> Workshop -> Content folder", "\"C:/Program Files (x86)/Steam/steamapps/workshop/content/", "Please ensure you have provided the correct \"Steam\" / \"steamapps/\" \"workshop/\" \"content/\" path.\nThis is not to insert the MPP's Mod path directly\nBut to point where the stellaris workshop mods are located.", confirmation_folder).strip()  # 1st var: Content  \\ 2nd var: PATH  \\ 3rd var: Exception error alert  \\ 4th var: confirmation_file which can be Stellaris MPP folder f.ex.
                         separator_timer(1)
                         if mod_directory == "cancel":
                             mod_directory == None
@@ -628,7 +628,7 @@ def find_mod_folder(history=None):
                             return mod_directory
                             
                         elif prompt in p_manual or prompt in p_no or prompt in ["other", "2"]:
-                            mod_directory = insert_path_manually("Steamapps -> Workshop -> Content folder", "\"C:/Program Files (x86)/Steam/steamapps/workshop/content/", "Please ensure you have provided the correct \"Steam\" / \"steamapps/\" \"workshop/\" \"content/\" path.\nThis is not to insert the MPP's Mod path directly\nBut to point where the stellaris workshop mods are located.", confirmation_folder).strip()  # 1st var: Content  \\ 2nd var: PATH  \\ 3rd var: Exception error alert  \\ 4rd var: confirmation_file which can be Stellaris MPP folder f.ex.
+                            mod_directory = insert_path_manually("Steamapps -> Workshop -> Content folder", "\"C:/Program Files (x86)/Steam/steamapps/workshop/content/", "Please ensure you have provided the correct \"Steam\" / \"steamapps/\" \"workshop/\" \"content/\" path.\nThis is not to insert the MPP's Mod path directly\nBut to point where the stellaris workshop mods are located.", confirmation_folder).strip()  # 1st var: Content  \\ 2nd var: PATH  \\ 3rd var: Exception error alert  \\ 4th var: confirmation_file which can be Stellaris MPP folder f.ex.
                             separator_timer(1)
                             if mod_directory == "cancel" or mod_directory == None:
                                 mod_directory == None
@@ -1320,7 +1320,7 @@ def reset(prompt):
 def shutdown(prompt):
     if prompt in p_quit:
         separator_timer(1)
-        print("### SHUTING DOWN! ###")
+        print("### SHUTTING DOWN! ###")
         separator_timer(1)
         print("### See ya! I hope FLEX SCRIPT helped you!")
         custom_sleep(3)
