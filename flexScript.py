@@ -4,6 +4,8 @@ import time
 import string
 import json
 import shutil
+import subprocess
+import getpass
 # import pygame
 
 
@@ -44,6 +46,7 @@ optional_semi_search = False
 tutorial_active = True
 is_any_custom_none = True     # Check if any MPP customization variable is Null / None 
 auto_update_enabled = False   # Turns auto-update on or off
+mod_update_ready = False      # Becomes True after mod files are updated
 
 ## Declare General Variables
 prompt = None
@@ -229,7 +232,7 @@ help_texts = {
 }
 
 def display_main_menu_header():
-    global fs_mode
+    global fs_mode, mod_update_ready
     print("\n##############################################")
     print("#               Flex Script Menu             #")
     print("##############################################\n")
@@ -246,7 +249,10 @@ def display_main_menu_header():
     print("8. QUIT:          Quit Flex Script\n")
     print("\n-- SAVE & LOAD --")
     print("9. Save Settings")
-    print("10. Load Settings\n\n\n")
+    print("10. Load Settings")
+    if mod_update_ready:
+        print("11. PUBLISH:      Upload mod to Steam")
+    print("\n\n")
 
 
 def display_server_mode_header():
@@ -2011,6 +2017,7 @@ def toggle_auto_update():
     
     
 def update_mod_files():
+    global mod_update_ready
     print_sep("### Updating Mod Files ###", 2)
     
     if not auto_update_enabled:
@@ -2055,11 +2062,51 @@ def update_mod_files():
 
         print_sep("Mod files updated with current customization values.", 2)
         separator_timer(2)
+        mod_update_ready = True
     
     except Exception as e:
         print(f"An error occurred while updating mod files: {e}")
         separator_timer(2)
 
+
+def upload_mod_to_steam():
+    global mod_update_ready, stellaris_id, mod_id, mod_directory
+
+    if not mod_update_ready:
+        print_sep("Mod files must be updated before uploading to Steam.", 2)
+        return
+
+    print_sep("### Uploading Mod to Steam ###", 2)
+
+    steam_user = os.environ.get("STEAM_USERNAME") or input("Enter Steam username: ").strip()
+    steam_pass = os.environ.get("STEAM_PASSWORD") or getpass.getpass("Enter Steam password: ")
+
+    vdf_path = os.path.join(mod_directory or "", "workshop_build.vdf")
+    vdf_content = (
+        f""""workshop_build_item"\n{{\n    "appid" "{stellaris_id}"\n    "publishedfileid" "{mod_id}"\n    "contentfolder" "{mod_directory or ''}"\n    "changenote" "Updated via Flex Script"\n}}\n"""
+    )
+
+    try:
+        with open(vdf_path, "w", encoding="utf-8") as vdf_file:
+            vdf_file.write(vdf_content)
+
+        subprocess.run(
+            [
+                "steamcmd",
+                "+login",
+                steam_user,
+                steam_pass,
+                "+workshop_build_item",
+                vdf_path,
+                "+quit",
+            ],
+            check=True,
+        )
+        print_sep("Steam upload complete.", 2)
+    except FileNotFoundError:
+        print_sep("steamcmd not found. Please install SteamCMD and ensure it is in PATH.", 2)
+    except subprocess.CalledProcessError as e:
+        print(f"Steam upload failed: {e}")
 
 def prepare_for_server_clients():
     global fs_mode, auto_update_enabled
@@ -2192,7 +2239,7 @@ def main_menu(history):
     
     while True:    
         separator_timer(0)
-        global fs_mode, previous_fs_mode
+        global fs_mode, previous_fs_mode, mod_update_ready
 
         # Display a different header based on the current mode
         if fs_mode == "SERVER":
@@ -2227,7 +2274,8 @@ def main_menu(history):
      
         else:
             
-            choice = input("Enter your choice (1-10): ").strip()
+            prompt_text = "Enter your choice (1-11): " if mod_update_ready else "Enter your choice (1-10): "
+            choice = input(prompt_text).strip()
             separator_timer(1)
             if choice == "1" or choice in p_reset:
                 print ("### WARNING!\n\nYou have chosen to reset the settings file.\nThis will reset paths and customization values on that file and restart the whole process...\n")
@@ -2261,7 +2309,10 @@ def main_menu(history):
                 main_menu()  # Return to main menu
             elif choice in ["10", "load"]:
                 load_settings()  # Load settings
-                main_menu()  # Return to main menu    
+                main_menu()  # Return to main menu
+            elif mod_update_ready and (choice == "11" or choice in ["publish", "upload", "steam"]):
+                upload_mod_to_steam()
+                main_menu()  # Return to main menu
             else:
                 print("Invalid choice, please try again.")
                 separator_timer(2)
