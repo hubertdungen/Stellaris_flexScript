@@ -236,7 +236,7 @@ def display_main_menu_header():
     print(f"# Mode: {fs_mode}\n")
     print("\nWelcome to the Flex Script main menu. Here you can:")
     print("1. RESTART:       Restart the path finding and customization process")
-    print("                   \-> This will delete every value in settings!")
+    print("                   -> This will delete every value in settings!")
     print("2. CUSTOMIZE:     Go to the customization menu")
     print("3. CREDITS:       Show the initial FS header")
     print("4. TUTORIAL:      View the tutorial")
@@ -1959,7 +1959,7 @@ def change_fs_mode():
         "\n> RUSH   - This mode will skip every FS 'separator' time delay."
         "\n> DEBUG  - The developer mode. It's actually RUSH with DEBUG messages."
         "\n> SERVER - Server mode to prepare this FS and Settings file to share with your friends."
-        "\n            \-> This helps making the process cleaner and quicker."
+        "\n            -> This helps making the process cleaner and quicker."
         "\n                You setup the settings, prepare server and share."
         "\n                Ask your friends to run FS with settings files on the same location."
         "\n                As this is a manual option, you should go back and toggle the \"auto-update\" feature."
@@ -2322,7 +2322,7 @@ def settings_menu():
         print("##############################################\n")
         print("Choose an option to modify Flex Script settings:\n")
         print("1. Change Flex Script Mode (NORMAL, FAST, RUSH, DEBUG, SERVER)")
-        print("    \-> Or directly enter a mode (e.g., 'NORMAL', 'DEBUG')")
+        print("    -> Or directly enter a mode (e.g., 'NORMAL', 'DEBUG')")
         print("2. Update Stellaris Game ID")
         print("3. Update Mod ID")
         print("4. Toggle Auto-Update Feature")
