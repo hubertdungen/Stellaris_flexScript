@@ -33,7 +33,7 @@ Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|C
 The server mode streamlines the setup process for multiplayer sessions, making it easy to share custom settings with friends:
 
 1. **Set Up Your Settings:** First, configure your Flex Script settings (follow the Customization Usage tips above) to your preference in NORMAL mode (or other than SERVER mode).
-2. **Prepare Server Mode:** Convert your Flex Script into a server-ready version throught the Flex Script Menu (select "SERVER MODE"). This process adjusts the script to work efficiently for multiplayer sessions.
+2. **Prepare Server Mode:** Convert your Flex Script into a server-ready version through the Flex Script Menu (select "SERVER MODE"). This process adjusts the script to work efficiently for multiplayer sessions.
 3. **Share with Friends:** Distribute the server-ready Flex Script executable (`flexScript.exe`) and the corresponding settings file (`fs_settings.json`) to your friends.
 4. **Easy Client Setup:** Your friends should place both the executable and the settings file anywhere in the same directory on their system.
 5. **Run and Play:** Have your friends run the `flexScript.exe`. The script will automatically configure their game using the shared settings, ensuring everyone is synchronized for multiplayer gameplay. 
