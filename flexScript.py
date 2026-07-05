@@ -16,7 +16,7 @@ mod_id = "3038118849"            # This is the mod id that might need updating i
 flex_v = "2.1.1"                 # Flex Script version
 flex_ab_v = "2.1.1"              # The real constant version of this FS Script
 mod_v = "1"                      # Mod version
-stellaris_v = "3.10.XX"          # Designed for Stellaris Version...
+stellaris_v = "4.4.4"            # Designed for Stellaris Version...
 fs_set_st_v = None               # The version of "Designed for Stellaris Version" that was stored last time on the settings file  // This is intended for troubleshooting
 virgin = True                    # Is it the first time FS is being run?
 fs_mode = "NORMAL"                # NORMAL - Normal mode as it was intended to work /// RUSH - Fast mode, tries to run in the most autonomous & quick way /// DEBUG - Software Dev Mode  // SERVER - Server client ready
@@ -58,6 +58,8 @@ st_confirmation_key = "stellaris.exe"
 descriptor_check = True
 defines_name = "00_defines.txt"                     # The name of the file "00_define.txt"               // in case paradox changes it's name
 species_arc_name = "00_species_archetypes.txt"      # The name of the file "00_species_archetypes..txt"  // in case paradox changes it's name
+defines_mod_name = None
+species_mod_arc_name = None
 
 
 ## Declare picks & points
@@ -716,25 +718,35 @@ def find_mod_files(mod_directory, history = None):
     
     global defines_name
     global species_arc_name
+    global defines_mod_name
+    global species_mod_arc_name
     global defines_mod_folder_path
     global species_mod_folder_path
     
     
     if fs_mode == "DEBUG": print(f"DEBUG_mod_files_0:  mod_directory:{mod_directory} // defines_name:{defines_name} // defines_mod_folder_path:{defines_mod_folder_path} // species_mod_folder_path:{species_mod_folder_path} // species_arc_name:{species_arc_name}\n\n")
     
-    ## DETECT 00_defines.txt
-    defines_mod_folder_path = path_file_checker("MPP Mod folder", mod_directory, defines_name)
+    ## DETECT defines file
+    defines_mod_name, defines_mod_folder_path = find_first_matching_file(
+        "MPP Mod folder",
+        mod_directory,
+        build_file_candidates(defines_mod_name, "mpp_defines.txt", defines_name, "00_defines.txt")
+    )
     if defines_mod_folder_path:
         # Implement logic to assign the mod files
-        # defines_mod_folder_path = os.path.join(mod_directory, defines_name)
+        # defines_mod_folder_path = os.path.join(mod_directory, defines_mod_name)
         if fs_mode == "DEBUG": print(f"DEBUG_mod_files_1:  mod_directory:{mod_directory} // defines_name:{defines_name} // defines_mod_folder_path:{defines_mod_folder_path} // species_mod_folder_path:{species_mod_folder_path} // species_arc_name:{species_arc_name}\n\n")
 
     
-    ## DETECT 00_species_archetypes.txt
-    species_mod_folder_path = path_file_checker("MPP Mod folder", mod_directory, species_arc_name)
+    ## DETECT species archetypes file
+    species_mod_arc_name, species_mod_folder_path = find_first_matching_file(
+        "MPP Mod folder",
+        mod_directory,
+        build_file_candidates(species_mod_arc_name, "mpp_species_archetypes.txt", species_arc_name, "00_species_archetypes.txt")
+    )
     if species_mod_folder_path:
         # Implement logic to assign the mod files
-        # species_mod_folder_path = os.path.join(mod_directory, species_arc_name)
+        # species_mod_folder_path = os.path.join(mod_directory, species_mod_arc_name)
         if fs_mode == "DEBUG": print(f"DEBUG_mod_files_2:  mod_directory:{mod_directory} // defines_name:{defines_name} // defines_mod_folder_path:{defines_mod_folder_path} // species_mod_folder_path:{species_mod_folder_path} // species_arc_name:{species_arc_name}\n\n")
 
     
@@ -808,10 +820,12 @@ def define_mod_files_path():
     global species_mod_file_path
     global defines_name
     global species_arc_name
+    global defines_mod_name
+    global species_mod_arc_name
     
     # Paths to the mod files
-    defines_mod_file_path = os.path.join(defines_mod_folder_path, defines_name)
-    species_mod_file_path = os.path.join(species_mod_folder_path, species_arc_name) 
+    defines_mod_file_path = os.path.join(defines_mod_folder_path, defines_mod_name or defines_name)
+    species_mod_file_path = os.path.join(species_mod_folder_path, species_mod_arc_name or species_arc_name)
     
     
 
@@ -1108,6 +1122,33 @@ def path_file_checker(subject, path, confirmation_path):
     return None
 
 
+def build_file_candidates(*file_names):
+    candidates = []
+    for file_name in file_names:
+        if file_name and file_name not in candidates:
+            candidates.append(file_name)
+    return candidates
+
+
+def find_first_matching_file(subject, path, file_names):
+    print(f"Checking within {path} for {', '.join(file_names)} related to {subject}.")
+    separator_timer(2)
+
+    for file_name in file_names:
+        for dirpath, dirnames, filenames in os.walk(path):
+            if file_name in filenames:
+                print(f"\nFound {file_name} within {dirpath}")
+                separator_timer(2)
+                return file_name, dirpath
+
+    print("!!! ERROR !!!")
+    print(f"\nNone of {', '.join(file_names)} were found in any subdirectories of {path} related to {subject}.")
+    separator_btimer(1,1)
+    print("\nEither the path is incorrect or the expected file is missing.")
+    separator_btimer(3,1)
+    return None, None
+
+
 
 ## Search a path inside a hard drive 
 def search_subject_in_drive(drive_letter, search_subject, descriptor_check=True):
@@ -1152,8 +1193,9 @@ def search_subject_in_drive(drive_letter, search_subject, descriptor_check=True)
                 potential_path = os.path.join(dirpath, search_subject)
                 if workshop_mod_key and workshop_mod_key not in dirpath:
                     continue  # Skip if stellaris_id is not in the path
-                if descriptor_check and not os.path.exists(os.path.join(potential_path, "descriptor.txt")):
-                    continue  # Skip if descriptor.txt is not found in the directory
+                descriptor_names = ("descriptor.mod", "descriptor.txt")
+                if descriptor_check and not any(os.path.exists(os.path.join(potential_path, name)) for name in descriptor_names):
+                    continue  # Skip if a Stellaris descriptor is not found in the directory
                 return potential_path  # Return the path if it's a directory
 
             # Check if the file name matches search_subject
@@ -1776,6 +1818,8 @@ def save_settings():
         "fs_designed_to_stellaris_v": stellaris_v,
         "defines_name": defines_name,
         "species_arc_name": species_arc_name,
+        "defines_mod_name": defines_mod_name,
+        "species_mod_arc_name": species_mod_arc_name,
         "game_directory": game_directory,
         "steam_mods_directory": steam_mods_directory,
         "mod_directory": mod_directory,
@@ -1816,6 +1860,7 @@ def load_settings():
     global defines_van_folder_path, species_van_folder_path
     global defines_mod_folder_path, species_mod_folder_path
     global fs_mode, previous_fs_mode, virgin, defines_name, species_arc_name
+    global defines_mod_name, species_mod_arc_name
     global auto_update_enabled
     global ethos_max_points, civic_points_base, machine_trait_points
     global machine_max_traits, species_trait_points, species_max_traits
@@ -1831,8 +1876,10 @@ def load_settings():
         flex_v = settings.get("flex_v")
         mod_v = settings.get("mod_v")
         fs_set_st_v = settings.get("fs_designed_to_stellaris_v")
-        defines_name = settings.get("defines_name")
-        species_arc_name = settings.get("species_arc_name")
+        defines_name = settings.get("defines_name") or defines_name
+        species_arc_name = settings.get("species_arc_name") or species_arc_name
+        defines_mod_name = settings.get("defines_mod_name")
+        species_mod_arc_name = settings.get("species_mod_arc_name")
         game_directory = settings.get("game_directory")
         steam_mods_directory = settings.get("steam_mods_directory")
         mod_directory = settings.get("mod_directory")
@@ -2173,6 +2220,7 @@ def reset_settings_to_default():
     global game_directory, steam_mods_directory, mod_directory, defines_van_file_path, species_van_file_path
     global defines_mod_file_path, species_mod_file_path, ethos_max_points, civic_points_base, machine_trait_points
     global machine_max_traits, species_trait_points, species_max_traits, fs_mode
+    global defines_mod_name, species_mod_arc_name
 
     # Resetting all relevant variables to their initial default values
     game_directory = None
@@ -2182,6 +2230,8 @@ def reset_settings_to_default():
     species_van_file_path = None
     defines_mod_file_path = None
     species_mod_file_path = None
+    defines_mod_name = None
+    species_mod_arc_name = None
     ethos_max_points = None
     civic_points_base = None
     machine_trait_points = None
