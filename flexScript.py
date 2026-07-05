@@ -2190,7 +2190,7 @@ def upload_mod_to_steam():
         workshop_changenote_name,
         "Updated for Stellaris 4.4.* and refreshed species archetype overrides."
     )
-    vdf_path = os.path.join(mod_directory or "", "workshop_build.vdf")
+    vdf_path = os.path.join(application_directory(), "workshop_build.vdf")
     steamcmd_path = os.environ.get("STEAMCMD_PATH", "steamcmd")
 
     try:
