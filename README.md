@@ -1,4 +1,4 @@
-# Flex Script v2.1.0 for Stellaris MPP
+# Flex Script v2.1.2 for Stellaris MPP
 
 Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]](https://steamcommunity.com/sharedfiles/filedetails/?id=3038118849)" (MPP). This major update introduces a range of new features, optimizations, and user experience improvements, making the script more intuitive, versatile, and efficient.
 
@@ -13,6 +13,7 @@ Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|C
 - **Optimized Performance:** Adjusted for faster execution, with modes tailored for different user needs.
 - **Auto-Update Feature:** This feature ensures that the MPP files are always equal to the Stellaris target files.
 - **Steam Publishing:** After auto-updating, an admin can upload the mod directly to Steam using `steamcmd`.
+- **Stellaris 4.4 Support:** Detects the current MPP Workshop file names and updates the full species archetype structure required by Stellaris 4.4.
 
 
 ## Installation
@@ -39,9 +40,9 @@ Flex Script can upload the mod to Steam Workshop after an auto-update. This requ
 Ensure the SteamCMD directory is on your `PATH` or note its full path for later use.
 
 #### Publishing
-1. Set the environment variables `STEAM_USERNAME` and `STEAM_PASSWORD` for the Steam account that owns the mod (the script will prompt if unset).
+1. Set the environment variable `STEAM_USERNAME` for the Steam account that owns the mod, or enter it when prompted.
 2. Run Flex Script and let the auto-update complete. Once finished, the menu reveals a `PUBLISH: Upload mod to Steam` option.
-3. Select the publish option. Flex Script creates a `workshop_build.vdf` with the necessary `appid`, `publishedfileid`, and `contentfolder`, then runs `steamcmd +login <user> <password> +workshop_build_item workshop_build.vdf +quit` to upload the mod files.
+3. Select the publish option. Flex Script creates a `workshop_build.vdf` with the necessary `appid`, `publishedfileid`, `contentfolder`, preview image, description, and changenote, then runs `steamcmd +login <user> +workshop_build_item workshop_build.vdf +quit` to upload the mod files. SteamCMD will prompt for your password and Steam Guard code directly.
 
 For more information consult Valve's [Workshop Publishing](https://developer.valvesoftware.com/wiki/Workshop_Publishing) guide.
 
@@ -72,6 +73,8 @@ If you encounter any issues or have questions, please [open an issue](https://gi
 
 ## Version History
 
+- **v2.1.2:** Updates the publish workflow, Workshop description/changenote files, and Stellaris 4.4 MPP file detection.
+- **v2.1.1:** Adds SteamCMD helper scripts and publish menu support.
 - **v2.1.0:** Major overhaul with new features and optimizations.
 - Previous versions: See the [changelog](https://github.com/hubertdungen/Stellaris_flexScript/commits/main/) for detailed version history.
 

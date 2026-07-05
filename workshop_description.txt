@@ -1,0 +1,84 @@
+[For Stellaris 4.4.*]
+
+Welcome to More Picks & Points "FLEX EDITION"
+
+This is the Flex Edition of "More Picks & Points: Traits|Civics|Ethics" older versions, or just MPP. This edition offers you the freedom to customize the mod settings without manually editing any files, thanks to the optional Flex(ible) Script tool. Just download it and run it.
+(Note: "Flex" in this edition stands for "Flexible" and not any other possible meaning. The goal is to provide customization options, not to imply anything else.)
+
+* MOD DESCRIPTION *
+This mod provides players and NPCs with expanded freedom when creating a new empire. It offers increased trait points, ethics, and civic picks. Whether you're looking to craft a unique civilization or simply experiment with different combinations, this mod enhances the Stellaris empire-building experience by increasing the diversity of alien species and ecosystems.
+
+Vanilla Values:
+- ETHOS_MAX_POINTS: 3
+- GOVERNMENT_CIVIC_POINTS_BASE: 2
+- Mechanical/Robot Trait Points: 0
+- Machine Trait Points: 1
+- Biological Trait Points: 2
+- Max Mechanical/Robot Traits: 4
+- Max Machine Traits: 5
+- Max Biological Traits: 5
+- Leader trait tweaks: disabled
+
+Standard (Mod Default Preset) Values:
+- ETHOS_MAX_POINTS: 5
+- GOVERNMENT_CIVIC_POINTS_BASE: 5
+- Mechanical/Robot Trait Points: 1
+- Machine Trait Points: 4
+- Biological Trait Points: 5
+- Max Mechanical/Robot Traits: 5
+- Max Machine Traits: 8
+- Max Biological Traits: 8
+- Leader trait tweaks: disabled
+
+Custom Values:
+With flexScript, you can freely customize these values to your preference.
+
+* WHAT'S NEW IN THE FLEX EDITION? *
+
+The FLEX EDITION introduces a way to tweak the mod's settings. With flexScript (FS), you can:
+
+  * Set the mod to vanilla default values.
+  * Use the standard or beast presets.
+  * Fully customize the points and picks to your liking.
+  * Prepare MPP for server gameplay.
+  * Upload a tested Workshop build through SteamCMD.
+
+FS is open source and was developed in Python. You can check its code in the GitHub repository.
+
+* HOW TO USE THE FLEXSCRIPT *
+
+  1. Download the latest release from the Releases Page.
+  2. Follow the instructions in the Readme.md file at flexScript.
+  3. Run the script and follow the on-screen prompts to customize your mod settings.
+
+* HOW TO UPDATE MPP *
+With FS, you don't have to wait for the mod to be updated-you can update it yourself whenever Stellaris gets a new version. Just follow these steps:
+
+  1. Run FS and let it check all folders and files to ensure everything is in place.
+  2. Choose option 6: UPDATE. If you're in SERVER MODE, deactivate it before proceeding.
+  3. Wait for the update to complete.
+
+* EASIER MULTIPLAYER SETUP *
+Hosting a multiplayer game with friends? FS simplifies the process. FS's server mode helps all players keep identical mod settings, reducing the risk of desyncs or compatibility issues. Remember to test online games after customization and report any issues.
+
+Happy gaming!
+
+* WARNING *
+Please note that this mod also alters the picks and point limits for NPC Empires. This is not intended to function as a Cheat Mod. Instead, these changes increase diversity across player-created and AI-controlled species and empires. This affects game balance and may make the game harder or easier depending on the species you create.
+
+* COMPATIBILITY *
+This version has been locally tested on Stellaris 4.4.4 and targets the Stellaris 4.4.* compatibility line. The STANDARD, BEAST, and LITE versions are no longer maintained; their features are integrated into this FLEX EDITION.
+
+This mod overrides define and species archetype values, so it may conflict with other mods that change trait points, ethics, civics, or species archetypes.
+
+* KNOWN ISSUES *
+
+  * FlexScript "Update" copies current vanilla file structure into the MPP files, so it can increase incompatibility with other mods that alter the same files.
+  * Occasionally, running FS might trigger Windows Defender due to its interaction with mod files and the Stellaris installation. The script is open source, so you can inspect the code in the GitHub repository.
+  * Leader trait tweaks were removed until the current leader trait/officer issue has a safe fix.
+
+* THANK YOU *
+A huge thank you to all contributors and users who have helped make this mod what it is today. Your feedback, suggestions, and support have been invaluable. Special shoutout to @Athinks, the original modder, and to the commenters who helped isolate the Stellaris 4.x species archetype fix.
+
+* SUPPORT THE MOD *
+If you appreciate the work, please rate and give a thumbs up. Your support keeps the mod alive and thriving.

@@ -1,7 +1,7 @@
 @echo off
 setlocal enabledelayedexpansion
 
-REM Automatically compile any flexScript* Python file into flexScripy.exe
+REM Automatically compile any flexScript* Python file into flexScript.exe
 
 set SCRIPT=
 for %%i in (flexScript*.py) do (
@@ -26,7 +26,7 @@ if errorlevel 1 (
 
 )
 
-pyinstaller --noconfirm --onefile --name flexScripy "!SCRIPT!"
+pyinstaller --noconfirm --onefile --name flexScript "!SCRIPT!"
 
 if errorlevel 1 (
     echo.

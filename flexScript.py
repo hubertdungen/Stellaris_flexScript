@@ -5,6 +5,7 @@ import string
 import json
 import shutil
 import subprocess
+import subprocess
 import getpass
 # import pygame
 
@@ -13,8 +14,8 @@ import getpass
 # Declare IDs, Versions and Mode Variables
 stellaris_id = "281990"          # This might need updating if Stellaris' game id changes
 mod_id = "3038118849"            # This is the mod id that might need updating if the Mod id changes
-flex_v = "2.1.1"                 # Flex Script version
-flex_ab_v = "2.1.1"              # The real constant version of this FS Script
+flex_v = "2.1.2"                 # Flex Script version
+flex_ab_v = "2.1.2"              # The real constant version of this FS Script
 mod_v = "1"                      # Mod version
 stellaris_v = "4.4.4"            # Designed for Stellaris Version...
 fs_set_st_v = None               # The version of "Designed for Stellaris Version" that was stored last time on the settings file  // This is intended for troubleshooting
@@ -60,6 +61,9 @@ defines_name = "00_defines.txt"                     # The name of the file "00_d
 species_arc_name = "00_species_archetypes.txt"      # The name of the file "00_species_archetypes..txt"  // in case paradox changes it's name
 defines_mod_name = None
 species_mod_arc_name = None
+workshop_title = "More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]"
+workshop_description_name = "workshop_description.txt"
+workshop_changenote_name = "workshop_changenote.txt"
 
 
 ## Declare picks & points
@@ -2116,6 +2120,48 @@ def update_mod_files():
         separator_timer(2)
 
 
+def application_directory():
+    if getattr(sys, "frozen", False):
+        return os.path.dirname(sys.executable)
+    return os.path.dirname(os.path.abspath(__file__))
+
+
+def read_workshop_text_file(file_name, fallback):
+    file_path = os.path.join(application_directory(), file_name)
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as text_file:
+            return text_file.read().strip()
+    return fallback.strip()
+
+
+def write_vdf_multiline_value(lines, key, value):
+    value = value.replace('"', "'")
+    value_lines = value.splitlines() or [""]
+    lines.append(f'\t"{key}" "{value_lines[0]}')
+    lines.extend(value_lines[1:])
+    lines.append('"')
+
+
+def write_workshop_build_vdf(vdf_path, description, changenote):
+    preview_file = os.path.join(mod_directory or "", "thumbnail.png")
+    lines = [
+        '"workshopitem"',
+        "{",
+        f'\t"appid" "{stellaris_id}"',
+        f'\t"publishedfileid" "{mod_id}"',
+        f'\t"contentfolder" "{mod_directory or ""}"',
+        f'\t"previewfile" "{preview_file if os.path.exists(preview_file) else ""}"',
+        '\t"visibility" "0"',
+        f'\t"title" "{workshop_title}"',
+    ]
+    write_vdf_multiline_value(lines, "description", description)
+    write_vdf_multiline_value(lines, "changenote", changenote)
+    lines.append("}")
+
+    with open(vdf_path, "w", encoding="utf-8") as vdf_file:
+        vdf_file.write("\n".join(lines) + "\n")
+
+
 def upload_mod_to_steam():
     global mod_update_ready, stellaris_id, mod_id, mod_directory
 
@@ -2126,23 +2172,29 @@ def upload_mod_to_steam():
     print_sep("### Uploading Mod to Steam ###", 2)
 
     steam_user = os.environ.get("STEAM_USERNAME") or input("Enter Steam username: ").strip()
-    steam_pass = os.environ.get("STEAM_PASSWORD") or getpass.getpass("Enter Steam password: ")
+    if not steam_user:
+        print_sep("Steam username is required before uploading.", 2)
+        return
 
-    vdf_path = os.path.join(mod_directory or "", "workshop_build.vdf")
-    vdf_content = (
-        f""""workshop_build_item"\n{{\n    "appid" "{stellaris_id}"\n    "publishedfileid" "{mod_id}"\n    "contentfolder" "{mod_directory or ''}"\n    "changenote" "Updated via Flex Script"\n}}\n"""
+    description = read_workshop_text_file(
+        workshop_description_name,
+        "Updated for the current Stellaris version via Flex Script."
     )
+    changenote = read_workshop_text_file(
+        workshop_changenote_name,
+        "Updated for Stellaris 4.4.* and refreshed species archetype overrides."
+    )
+    vdf_path = os.path.join(mod_directory or "", "workshop_build.vdf")
+    steamcmd_path = os.environ.get("STEAMCMD_PATH", "steamcmd")
 
     try:
-        with open(vdf_path, "w", encoding="utf-8") as vdf_file:
-            vdf_file.write(vdf_content)
+        write_workshop_build_vdf(vdf_path, description, changenote)
 
         subprocess.run(
             [
-                "steamcmd",
+                steamcmd_path,
                 "+login",
                 steam_user,
-                steam_pass,
                 "+workshop_build_item",
                 vdf_path,
                 "+quit",
@@ -2151,7 +2203,7 @@ def upload_mod_to_steam():
         )
         print_sep("Steam upload complete.", 2)
     except FileNotFoundError:
-        print_sep("steamcmd not found. Please install SteamCMD and ensure it is in PATH.", 2)
+        print_sep("steamcmd not found. Please install SteamCMD and ensure it is in PATH, or set STEAMCMD_PATH.", 2)
     except subprocess.CalledProcessError as e:
         print(f"Steam upload failed: {e}")
 
