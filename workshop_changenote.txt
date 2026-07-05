@@ -4,4 +4,5 @@ Updated for Stellaris 4.4.*.
 - Fixed biological and machine trait points/max traits after the 4.x species archetype changes.
 - Updated the supported_version metadata to v4.4.*.
 - Flex Script now detects the current MPP file names and can generate a SteamCMD upload VDF with description/changenote metadata.
+- Restored the rich Steam Workshop BBCode description formatting, including support links/buttons.
 - Leader trait tweaks remain disabled until the current leader trait issue has a safe fix.

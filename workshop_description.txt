@@ -1,84 +1,103 @@
 [For Stellaris 4.4.*]
 
-Welcome to More Picks & Points "FLEX EDITION"
-
-This is the Flex Edition of "More Picks & Points: Traits|Civics|Ethics" older versions, or just MPP. This edition offers you the freedom to customize the mod settings without manually editing any files, thanks to the optional Flex(ible) Script tool. Just download it and run it.
+[h1][b]Welcome to More Picks & Points "FLEX EDITION"[/b][/h1]
+This is the Flex Edition of [i][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2034226393]"More Picks & Points: Traits|Civics|Ethics" older versions[/url][/i] or just [i]MPP[/i]. This edition offers you the freedom to customize the mod settings without manually editing any files, thanks to our optional Flex(ible) Script tool. Just download it and run it.
 (Note: "Flex" in this edition stands for "Flexible" and not any other possible meaning. The goal is to provide customization options, not to imply anything else.)
 
-* MOD DESCRIPTION *
-This mod provides players and NPCs with expanded freedom when creating a new empire. It offers increased trait points, ethics, and civic picks. Whether you're looking to craft a unique civilization or simply experiment with different combinations, this mod enhances the Stellaris empire-building experience by increasing the diversity of alien species and ecosystems.
+[h2]• MOD DESCRIPTION •[/h2]
+This mod provides players (and NPCs) with expanded freedom and realism when creating a new empire. It offers increased trait points, ethics, and civic picks. Whether you're looking to craft a unique civilization or just experimenting with different combinations, this mod is designed to enhance your Stellaris empire-building experience and user interactions by improving the diversity of alien species and ecosystems, enhancing biological realism.
 
-Vanilla Values:
-- ETHOS_MAX_POINTS: 3
-- GOVERNMENT_CIVIC_POINTS_BASE: 2
-- Mechanical/Robot Trait Points: 0
-- Machine Trait Points: 1
-- Biological Trait Points: 2
-- Max Mechanical/Robot Traits: 4
-- Max Machine Traits: 5
-- Max Biological Traits: 5
-- Leader trait tweaks: disabled
+[b]Vanilla Values:[/b]
+- [i]ETHOS_MAX_POINTS[/i]: 3
+- [i]GOVERNMENT_CIVIC_POINTS_BASE[/i]: 2
+- [i]Mechanical/Robot Trait Points[/i]: 0
+- [i]Machine Trait Points[/i]: 1
+- [i]Biological Trait Points[/i]: 2
+- [i]Max Mechanical/Robot Traits[/i]: 4
+- [i]Max Machine Traits[/i]: 5
+- [i]Max Biological Traits[/i]: 5
+- [i]Leader trait tweaks[/i]: disabled
 
-Standard (Mod Default Preset) Values:
-- ETHOS_MAX_POINTS: 5
-- GOVERNMENT_CIVIC_POINTS_BASE: 5
-- Mechanical/Robot Trait Points: 1
-- Machine Trait Points: 4
-- Biological Trait Points: 5
-- Max Mechanical/Robot Traits: 5
-- Max Machine Traits: 8
-- Max Biological Traits: 8
-- Leader trait tweaks: disabled
+[b]Standard (Mod Default Preset) Values:[/b]
+- [i]ETHOS_MAX_POINTS[/i]: 5
+- [i]GOVERNMENT_CIVIC_POINTS_BASE[/i]: 5
+- [i]Mechanical/Robot Trait Points[/i]: 1
+- [i]Machine Trait Points[/i]: 4
+- [i]Biological Trait Points[/i]: 5
+- [i]Max Mechanical/Robot Traits[/i]: 5
+- [i]Max Machine Traits[/i]: 8
+- [i]Max Biological Traits[/i]: 8
+- [i]Leader trait tweaks[/i]: disabled
 
-Custom Values:
-With flexScript, you can freely customize these values to your preference.
+[b]Custom Values:[/b]
+With the [b][url=https://github.com/hubertdungen/Stellaris_flexScript]flexScript[/url][/b], you can freely customize the above values to your preference.
 
-* WHAT'S NEW IN THE FLEX EDITION? *
 
-The FLEX EDITION introduces a way to tweak the mod's settings. With flexScript (FS), you can:
+[h2]• WHAT'S NEW IN THE FLEX EDITION? •[/h2]
+The [b]FLEX EDITION[/b] introduces a revolutionary way to tweak the mod's settings. With the [b][url=https://github.com/hubertdungen/Stellaris_flexScript]flexScript[/url][/b], you can:
+[list]
+[*]Set the mod to vanilla default values.
+[*]Use the standard or beast presets (similar to the previous STANDARD and BEAST editions).
+[*]Fully customize the points and picks to your liking.
+[*]Prepare MPP for server gameplay.
+[*]Upload a tested Workshop build through SteamCMD.
+[/list]
+[b][url=https://github.com/hubertdungen/Stellaris_flexScript]flexScript[/url][/b] is open source and was developed in Python. You can easily check its code at our GitHub repository.
 
-  * Set the mod to vanilla default values.
-  * Use the standard or beast presets.
-  * Fully customize the points and picks to your liking.
-  * Prepare MPP for server gameplay.
-  * Upload a tested Workshop build through SteamCMD.
 
-FS is open source and was developed in Python. You can check its code in the GitHub repository.
+[h2]• HOW TO USE THE FLEXSCRIPT •[/h2]
+[olist]
+[*]Download the latest release at the [b][url=https://github.com/hubertdungen/Stellaris_flexScript/releases]Releases Page[/url][/b].
+[*]Follow the Readme.md file at [b][url=https://github.com/hubertdungen/Stellaris_flexScript]flexScript[/url][/b].
+[*]Run the script, and follow the on-screen prompts to customize your mod settings.
+[/olist]
 
-* HOW TO USE THE FLEXSCRIPT *
 
-  1. Download the latest release from the Releases Page.
-  2. Follow the instructions in the Readme.md file at flexScript.
-  3. Run the script and follow the on-screen prompts to customize your mod settings.
+[h2]• HOW TO UPDATE MPP •[/h2]
+With FS, you don't have to wait for the mod to be updated; you can update it yourself whenever Stellaris gets a new version. Just follow these steps:
+[olist]
+[*]Run FS and let it check all folders and files to ensure everything is in place.
+[*]Choose option 6: UPDATE. If you're in SERVER MODE, deactivate it before proceeding.
+[*]Wait for the update to complete.
+[/olist]
 
-* HOW TO UPDATE MPP *
-With FS, you don't have to wait for the mod to be updated-you can update it yourself whenever Stellaris gets a new version. Just follow these steps:
-
-  1. Run FS and let it check all folders and files to ensure everything is in place.
-  2. Choose option 6: UPDATE. If you're in SERVER MODE, deactivate it before proceeding.
-  3. Wait for the update to complete.
-
-* EASIER MULTIPLAYER SETUP *
-Hosting a multiplayer game with friends? FS simplifies the process. FS's server mode helps all players keep identical mod settings, reducing the risk of desyncs or compatibility issues. Remember to test online games after customization and report any issues.
-
+[h2]• EASIER MULTIPLAYER SETUP •[/h2]
+Hosting a multiplayer game with friends? Flex Script simplifies the process. FS's server mode option helps all players keep identical mod settings, reducing the risk of desyncs or compatibility issues. Remember to test online games after customization, and [i]do let us know[/i] if you encounter any issues. Read more about this process at [b][url=https://github.com/hubertdungen/Stellaris_flexScript]Readme[/url][/b].
 Happy gaming!
 
-* WARNING *
-Please note that this mod also alters the picks and point limits for NPC Empires. This is not intended to function as a Cheat Mod. Instead, these changes increase diversity across player-created and AI-controlled species and empires. This affects game balance and may make the game harder or easier depending on the species you create.
 
-* COMPATIBILITY *
-This version has been locally tested on Stellaris 4.4.4 and targets the Stellaris 4.4.* compatibility line. The STANDARD, BEAST, and LITE versions are no longer maintained; their features are integrated into this FLEX EDITION.
+[h2]• WARNING •[/h2]
+Please note that this mod also alters the picks and point limits for NPC Empires. This is not intended to function as a [i]Cheat Mod[/i]. Rather, these changes enhance the diversity of traits across different species and empires, both player-created and AI-controlled. The aim is to create a more enriching, realistic, and intense gameplay experience. Obviously this has an impact on balance. This can either make your game harder or easier depending on the species you are creating.
+
+
+[h2]• COMPATIBILITY •[/h2]
+This version has been locally tested on Stellaris 4.4.4 and targets the Stellaris 4.4.* compatibility line. Please note that the STANDARD, BEAST, and LITE versions are no longer maintained. Instead, all the features have been integrated into this FLEX EDITION for a more streamlined and user-friendly experience, and also helping us to maintain this mod in an easier and more autonomous way.
 
 This mod overrides define and species archetype values, so it may conflict with other mods that change trait points, ethics, civics, or species archetypes.
 
-* KNOWN ISSUES *
 
-  * FlexScript "Update" copies current vanilla file structure into the MPP files, so it can increase incompatibility with other mods that alter the same files.
-  * Occasionally, running FS might trigger Windows Defender due to its interaction with mod files and the Stellaris installation. The script is open source, so you can inspect the code in the GitHub repository.
-  * Leader trait tweaks were removed until the current leader trait/officer issue has a safe fix.
+[h2]• KNOWN ISSUES •[/h2]
+[list]
+[*]FlexScript "Update" copies current vanilla file structure into the MPP files, so it can increase incompatibility with other mods that alter the same files.
+[*]Occasionally, running the Flex Script might trigger Windows Defender due to its interaction with mod files and the installed files of Stellaris. Rest assured, this script is open source and you can verify its harmless nature by checking the code on our GitHub repository.
+[*]Some mod incompatibilities may arise when using other mods that also modify trait points, ethics, civics, species archetypes, or related species creation rules.
+[*]Leader trait tweaks were removed until the current leader trait/officer issue has a safe fix.
+[/list]
 
-* THANK YOU *
-A huge thank you to all contributors and users who have helped make this mod what it is today. Your feedback, suggestions, and support have been invaluable. Special shoutout to @Athinks, the original modder, and to the commenters who helped isolate the Stellaris 4.x species archetype fix.
 
-* SUPPORT THE MOD *
-If you appreciate the work, please rate and give a thumbs up. Your support keeps the mod alive and thriving.
+[h2]• REPORTING ISSUES •[/h2]
+If you encounter any bugs or unexpected behavior, please report them in [url=https://steamcommunity.com/workshop/filedetails/discussion/3038118849/5966762781879865589/]this dedicated discussion thread[/url]. For mod issues, this link is preferred. For FlexScript usage issues, you can use either the provided link or our GitHub repository. Include as much detail as possible, such as your mod settings, any error messages, and steps to reproduce the issue. Your feedback helps us improve the mod for everyone!
+
+
+[h2]• THANK YOU •[/h2]
+A huge thank you to all the contributors and users who have helped make this mod what it is today. Your feedback, suggestions, and support have been invaluable. Special shoutout to [i][url=https://steamcommunity.com/id/Athinks]Athinks[/url][/i], the original modder, and all the other notable contributors listed in the [i][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2034226393]previous mod descriptions[/url][/i].
+
+Small extra credit to OpenAI Codex for helping speed up the Stellaris 4.4 update, repository cleanup, and release/upload process.
+
+
+[h2]• SUPPORT THE MOD •[/h2]
+[i]If you appreciate the work, please rate and give a thumbs up. Your support keeps the mod alive and thriving![/i]
+If you find this mod useful and want to support its ongoing development, consider buying me a coffee!
+
+[url=https://ko-fi.com/hubertkenobi][img]https://storage.ko-fi.com/cdn/generated/zfskfgqnf/rest-6268227db3c646f2bf04fe6af4161639-fwtbnp8f.jpg[/img][/url]
+[url=https://www.paypal.com/donate/?hosted_button_id=UQW23PY9YRUAQ][img]https://pics.paypal.com/00/s/ZWFmMjBhZDktMTA3My00M2FjLWI3MjItZDZkZDEwOGE0MGIx/file.PNG[/img][/url]
