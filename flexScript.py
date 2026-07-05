@@ -2142,15 +2142,21 @@ def write_vdf_multiline_value(lines, key, value):
     lines.append('"')
 
 
+def steamcmd_path_value(path):
+    return path.replace("\\", "/")
+
+
 def write_workshop_build_vdf(vdf_path, description, changenote):
     preview_file = os.path.join(mod_directory or "", "thumbnail.png")
+    content_folder = steamcmd_path_value(mod_directory or "")
+    preview_file = steamcmd_path_value(preview_file) if os.path.exists(preview_file) else ""
     lines = [
         '"workshopitem"',
         "{",
         f'\t"appid" "{stellaris_id}"',
         f'\t"publishedfileid" "{mod_id}"',
-        f'\t"contentfolder" "{mod_directory or ""}"',
-        f'\t"previewfile" "{preview_file if os.path.exists(preview_file) else ""}"',
+        f'\t"contentfolder" "{content_folder}"',
+        f'\t"previewfile" "{preview_file}"',
         '\t"visibility" "0"',
         f'\t"title" "{workshop_title}"',
     ]
