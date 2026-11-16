@@ -82,3 +82,6 @@ If you encounter any issues or have questions, please [open an issue](https://gi
 ## License
 
 This project is licensed under the MIT License.
+
+
+<p align="center"><a href="https://dlforge.dungenlabs.com"><img src="docs/branding/dlforge-logo.svg" alt="DL Forge" width="120"></a><br><a href="https://dlforge.dungenlabs.com">DL Forge</a></p>
