@@ -1,0 +1,11 @@
+"workshopitem"
+{
+	"appid" "281990"
+	"publishedfileid" "3038118849"
+	"contentfolder" "<absolute-path-to-this-repo>/workshop_mod"
+	"previewfile" "<absolute-path-to-preview-image>"
+	"visibility" "0"
+	"title" "More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]"
+	"description" "Update uploaded from the repository-tracked workshop_mod source folder."
+	"changenote" "Restore editable mod source files and fix trait point archetype definitions."
+}

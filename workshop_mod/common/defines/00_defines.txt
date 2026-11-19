@@ -1,0 +1,8 @@
+# More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]
+# Default FLEX preset values, matching the published Workshop description.
+# FlexScript can customize these values in-place.
+
+NGameplay = {
+	ETHOS_MAX_POINTS = 5
+	GOVERNMENT_CIVIC_POINTS_BASE = 5
+}

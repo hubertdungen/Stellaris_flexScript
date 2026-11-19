@@ -1,0 +1,34 @@
+# More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]
+# Default FLEX preset values, matching the published Workshop description.
+# Keep these variables and archetype blocks together: newer Stellaris updates may
+# ship vanilla archetype files that no longer preserve the old MPP variables, so
+# the mod source explicitly defines the editable values here.
+
+@robot_trait_points = 0
+@robot_max_traits = 4
+@machine_trait_points = 4
+@machine_max_traits = 8
+@species_trait_points = 5
+@species_max_traits = 8
+
+BIOLOGICAL = {
+	species_trait_points = @species_trait_points
+	species_max_traits = @species_max_traits
+}
+
+ROBOT = {
+	species_trait_points = @robot_trait_points
+	species_max_traits = @robot_max_traits
+}
+
+MACHINE = {
+	species_trait_points = @machine_trait_points
+	species_max_traits = @machine_max_traits
+}
+
+PRESAPIENT = {
+	species_trait_points = @species_trait_points
+	species_max_traits = @species_max_traits
+}
+
+OTHER = {}

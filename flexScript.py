@@ -1411,9 +1411,6 @@ def help_prompt(prompt, history):
             prompt == "p_tutorial"
             return prompt 
         
-        elif prompt in p_manual or prompt in p_semi:
-            return prompt
-        
         elif prompt in p_tutorial:
             separator_timer(1)
             print("### CALM DOWN! ###")
@@ -1469,10 +1466,13 @@ def help_prompt(prompt, history):
             return "help_shown"
         
         else:
-            print("### ERROR WHILE TRYING TO CALL FOR HELP ###")
-            return prompt
+            # This prompt was not a help/tutorial request. Leave it for the
+            # caller-specific menu logic (including numeric shortcuts such as
+            # 1/2/3) instead of showing a misleading help error.
+            return None
     else:
         help_parent = "Unknown Context"  # Fallback value
+        return None
 
     
 def proceed_confirmation(history):
@@ -1660,6 +1660,71 @@ def modify_value_in_file(file_path, key, new_value):
         file.write("\n".join(lines))
 
 
+def update_species_archetype_values(file_path, machine_points, machine_traits, biological_points, biological_traits):
+    """
+    Update Stellaris species archetype trait point/pick limits.
+
+    Recent Stellaris versions can ship 00_species_archetypes.txt without the
+    @machine_trait_points/@species_trait_points variables that older MPP files
+    used. In that case a simple variable find-and-replace leaves vanilla numeric
+    values inside the BIOLOGICAL/PRESAPIENT/MACHINE blocks, so trait points do
+    not change. This function updates both formats: it refreshes existing MPP
+    variables when present and directly edits the relevant archetype blocks.
+    """
+    with open(file_path, 'r') as file:
+        content = file.read()
+
+    replacements = {
+        "@machine_trait_points": machine_points,
+        "@machine_max_traits": machine_traits,
+        "@species_trait_points": biological_points,
+        "@species_max_traits": biological_traits,
+    }
+
+    lines = content.split("\n")
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        for key, value in replacements.items():
+            if stripped.startswith(f"{key} ="):
+                indent = line[:len(line) - len(line.lstrip())]
+                lines[index] = f"{indent}{key} = {value}"
+                break
+
+    block_values = {
+        "BIOLOGICAL": (biological_points, biological_traits),
+        "PRESAPIENT": (biological_points, biological_traits),
+        "MACHINE": (machine_points, machine_traits),
+    }
+
+    current_block = None
+    block_depth = 0
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        if block_depth == 0:
+            for block_name in block_values:
+                if stripped.startswith(f"{block_name} =") and "{" in stripped:
+                    current_block = block_name
+                    block_depth = stripped.count("{") - stripped.count("}")
+                    break
+            continue
+
+        if current_block:
+            points, traits = block_values[current_block]
+            indent = line[:len(line) - len(line.lstrip())]
+            if stripped.startswith("species_trait_points ="):
+                lines[index] = f"{indent}species_trait_points = {points}"
+            elif stripped.startswith("species_max_traits ="):
+                lines[index] = f"{indent}species_max_traits = {traits}"
+
+            block_depth += stripped.count("{") - stripped.count("}")
+            if block_depth <= 0:
+                current_block = None
+                block_depth = 0
+
+    with open(file_path, 'w') as file:
+        file.write("\n".join(lines))
+
+
 
 def modify_mod_files_with_defaults(mode):
     """
@@ -1677,10 +1742,13 @@ def modify_mod_files_with_defaults(mode):
     modify_value_in_file(defines_mod_file_path, "GOVERNMENT_CIVIC_POINTS_BASE", values["GOVERNMENT_CIVIC_POINTS_BASE"])
     
     # Modify 00_species_archetypes.txt
-    modify_value_in_file(species_mod_file_path, "@machine_trait_points", values["machine_trait_points"])
-    modify_value_in_file(species_mod_file_path, "@machine_max_traits", values["machine_max_traits"])
-    modify_value_in_file(species_mod_file_path, "@species_trait_points", values["species_trait_points"])
-    modify_value_in_file(species_mod_file_path, "@species_max_traits", values["species_max_traits"])
+    update_species_archetype_values(
+        species_mod_file_path,
+        values["machine_trait_points"],
+        values["machine_max_traits"],
+        values["species_trait_points"],
+        values["species_max_traits"]
+    )
     
     separator_timer(1)
     print(f"MPP Mod files have been modified with the {mode} preset!")
@@ -1711,10 +1779,13 @@ def modify_mod_files_custom():
     modify_value_in_file(defines_mod_file_path, "GOVERNMENT_CIVIC_POINTS_BASE", civic_points_base)
     
     # Modify 00_species_archetypes.txt
-    modify_value_in_file(species_mod_file_path, "@machine_trait_points", machine_trait_points)
-    modify_value_in_file(species_mod_file_path, "@machine_max_traits", machine_max_traits)
-    modify_value_in_file(species_mod_file_path, "@species_trait_points", species_trait_points)
-    modify_value_in_file(species_mod_file_path, "@species_max_traits", species_max_traits)
+    update_species_archetype_values(
+        species_mod_file_path,
+        machine_trait_points,
+        machine_max_traits,
+        species_trait_points,
+        species_max_traits
+    )
     
     separator_timer(1)
     print("Mod files modified with custom values successfully!")
@@ -2106,10 +2177,13 @@ def update_mod_files():
         # Assuming modify_value_in_file function exists and works as intended
         modify_value_in_file(defines_mod_file_path, "ETHOS_MAX_POINTS", ethos_max_points)
         modify_value_in_file(defines_mod_file_path, "GOVERNMENT_CIVIC_POINTS_BASE", civic_points_base)
-        modify_value_in_file(species_mod_file_path, "@machine_trait_points", machine_trait_points)
-        modify_value_in_file(species_mod_file_path, "@machine_max_traits", machine_max_traits)
-        modify_value_in_file(species_mod_file_path, "@species_trait_points", species_trait_points)
-        modify_value_in_file(species_mod_file_path, "@species_max_traits", species_max_traits)
+        update_species_archetype_values(
+            species_mod_file_path,
+            machine_trait_points,
+            machine_max_traits,
+            species_trait_points,
+            species_max_traits
+        )
 
         print_sep("Mod files updated with current customization values.", 2)
         separator_timer(2)
