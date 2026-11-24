@@ -1,4 +1,4 @@
-[For Stellaris 4.4.*]
+[For Stellaris 4.6.*]
 
 [h1][b]Welcome to More Picks & Points "FLEX EDITION"[/b][/h1]
 This is the Flex Edition of [i][url=https://steamcommunity.com/sharedfiles/filedetails/?id=2034226393]"More Picks & Points: Traits|Civics|Ethics" older versions[/url][/i] or just [i]MPP[/i]. This edition offers you the freedom to customize the mod settings without manually editing any files, thanks to our optional Flex(ible) Script tool. Just download it and run it.
@@ -71,7 +71,7 @@ Please note that this mod also alters the picks and point limits for NPC Empires
 
 
 [h2]• COMPATIBILITY •[/h2]
-This version has been locally tested on Stellaris 4.4.4 and targets the Stellaris 4.4.* compatibility line. Please note that the STANDARD, BEAST, and LITE versions are no longer maintained. Instead, all the features have been integrated into this FLEX EDITION for a more streamlined and user-friendly experience, and also helping us to maintain this mod in an easier and more autonomous way.
+This version targets the Stellaris 4.6.* compatibility line (checked against the vanilla 4.6.0 files). Please note that the STANDARD, BEAST, and LITE versions are no longer maintained. Instead, all the features have been integrated into this FLEX EDITION for a more streamlined and user-friendly experience, and also helping us to maintain this mod in an easier and more autonomous way.
 
 This mod overrides define and species archetype values, so it may conflict with other mods that change trait points, ethics, civics, or species archetypes.
 

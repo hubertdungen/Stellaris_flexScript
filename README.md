@@ -13,7 +13,7 @@ Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|C
 - **Optimized Performance:** Adjusted for faster execution, with modes tailored for different user needs.
 - **Auto-Update Feature:** This feature ensures that the MPP files are always equal to the Stellaris target files.
 - **Steam Publishing:** After auto-updating, an admin can upload the mod directly to Steam using `steamcmd`.
-- **Stellaris 4.4 Support:** Detects the current MPP Workshop file names and updates the full species archetype structure required by Stellaris 4.4.
+- **Stellaris 4.6 Support:** Detects the current MPP Workshop file names and updates the full species archetype structure required by Stellaris 4.x.
 
 
 ## Installation
@@ -73,6 +73,7 @@ If you encounter any issues or have questions, please [open an issue](https://gi
 
 ## Version History
 
+- **v2.1.3:** Stellaris 4.6 support. "Update mod files" now writes only the two MPP defines, so it no longer resets defines from other mods (Planetary Diversity bug), and keeps the mechanical trait values.
 - **v2.1.2:** Updates the publish workflow, Workshop description/changenote files, and Stellaris 4.4 MPP file detection.
 - **v2.1.1:** Adds SteamCMD helper scripts and publish menu support.
 - **v2.1.0:** Major overhaul with new features and optimizations.
