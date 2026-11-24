@@ -1,8 +1,6 @@
-Updated for Stellaris 4.4.*.
+Updated for Stellaris 4.6.*.
 
-- Refreshed the species archetype override using the current Stellaris 4.4.4 structure.
-- Fixed biological and machine trait points/max traits after the 4.x species archetype changes.
-- Updated the supported_version metadata to v4.4.*.
-- Flex Script now detects the current MPP file names and can generate a SteamCMD upload VDF with description/changenote metadata.
-- Restored the rich Steam Workshop BBCode description formatting, including support links/buttons.
-- Leader trait tweaks remain disabled until the current leader trait issue has a safe fix.
+- Checked against the vanilla Stellaris 4.6.0 species archetypes and defines: same structure, so the STANDARD values work as before.
+- Updated the supported_version metadata to v4.6.*.
+- Fixed a compatibility bug with mods that change other defines (reported with Planetary Diversity): Flex Script 2.1.3 now writes only the two MPP defines instead of a full copy of the vanilla 00_defines.txt. If you used "Update mod files" in an older Flex Script, run it again with 2.1.3 or unsubscribe and resubscribe.
+- Flex Script 2.1.3 also keeps the mechanical (robot) trait values when refreshing species archetypes.

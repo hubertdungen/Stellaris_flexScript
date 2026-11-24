@@ -14,10 +14,10 @@ import getpass
 # Declare IDs, Versions and Mode Variables
 stellaris_id = "281990"          # This might need updating if Stellaris' game id changes
 mod_id = "3038118849"            # This is the mod id that might need updating if the Mod id changes
-flex_v = "2.1.2"                 # Flex Script version
-flex_ab_v = "2.1.2"              # The real constant version of this FS Script
+flex_v = "2.1.3"                 # Flex Script version
+flex_ab_v = "2.1.3"              # The real constant version of this FS Script
 mod_v = "1"                      # Mod version
-stellaris_v = "4.4.4"            # Designed for Stellaris Version...
+stellaris_v = "4.6.0"            # Designed for Stellaris Version...
 fs_set_st_v = None               # The version of "Designed for Stellaris Version" that was stored last time on the settings file  // This is intended for troubleshooting
 virgin = True                    # Is it the first time FS is being run?
 fs_mode = "NORMAL"                # NORMAL - Normal mode as it was intended to work /// RUSH - Fast mode, tries to run in the most autonomous & quick way /// DEBUG - Software Dev Mode  // SERVER - Server client ready
@@ -1661,6 +1661,36 @@ def modify_value_in_file(file_path, key, new_value):
 
 
 
+def write_mpp_defines(file_path, ethos, civics):
+    """
+    Write only the defines MPP changes. Stellaris merges defines per key.
+    """
+    with open(file_path, "w", encoding="utf-8") as file:
+        file.write(
+            "NGameplay = {\n"
+            f"\tETHOS_MAX_POINTS = {ethos}\n"
+            f"\tGOVERNMENT_CIVIC_POINTS_BASE = {civics}\n"
+            "}\n"
+        )
+
+
+def read_variables(file_path, keys):
+    """
+    Read '@key = value' lines from an existing file, ignoring missing files.
+    """
+    found = {}
+    if not file_path or not os.path.exists(file_path):
+        return found
+    with open(file_path, "r", encoding="utf-8-sig", errors="replace") as file:
+        for line in file:
+            name, _, value = line.partition("=")
+            name = name.strip()
+            if name in keys and value.strip():
+                found[name] = value.split("#")[0].strip()
+    return found
+
+
+
 def modify_mod_files_with_defaults(mode):
     """
     Update the mod files with default values based on mode.
@@ -1673,8 +1703,7 @@ def modify_mod_files_with_defaults(mode):
     assign_custom_mpp_vars(mode)
     
     # Modify 00_defines.txt
-    modify_value_in_file(defines_mod_file_path, "ETHOS_MAX_POINTS", values["ETHOS_MAX_POINTS"])
-    modify_value_in_file(defines_mod_file_path, "GOVERNMENT_CIVIC_POINTS_BASE", values["GOVERNMENT_CIVIC_POINTS_BASE"])
+    write_mpp_defines(defines_mod_file_path, values["ETHOS_MAX_POINTS"], values["GOVERNMENT_CIVIC_POINTS_BASE"])
     
     # Modify 00_species_archetypes.txt
     modify_value_in_file(species_mod_file_path, "@machine_trait_points", values["machine_trait_points"])
@@ -1707,8 +1736,7 @@ def modify_mod_files_custom():
     species_max_traits = int(input("\nEnter number of species_max_traits (vanilla is 5).\n\nValue: "))
     
     # Modify 00_defines.txt
-    modify_value_in_file(defines_mod_file_path, "ETHOS_MAX_POINTS", ethos_max_points)
-    modify_value_in_file(defines_mod_file_path, "GOVERNMENT_CIVIC_POINTS_BASE", civic_points_base)
+    write_mpp_defines(defines_mod_file_path, ethos_max_points, civic_points_base)
     
     # Modify 00_species_archetypes.txt
     modify_value_in_file(species_mod_file_path, "@machine_trait_points", machine_trait_points)
@@ -2072,13 +2100,11 @@ def update_mod_files():
     print_sep("### Updating Mod Files ###", 2)
     
     if not auto_update_enabled:
-        print("This process will copy the vanilla '00_defines.txt' and '00_species_archetypes.txt'"
-              "\nfiles from the Stellaris installation directory. It then pastes them into the"
-              "\nmod's respective folders, overwriting the existing mod files. After this,"
-              "\na 'find and replace' operation updates the files with the values you've customized"
-              "\nthrough Flex Script."
-              "\n\nEssentially, this ensures that the mod files contain exactly what's in the"
-              "\nvanilla files, plus your customizations."
+        print("This process copies the vanilla '00_species_archetypes.txt' from the Stellaris"
+              "\ninstallation directory into the mod, overwriting the mod's species archetypes,"
+              "\nand then applies the values you've customized through Flex Script."
+              "\nThe mod's defines file is rewritten with only the two MPP defines (ethics and"
+              "\ncivic points), so it never overrides defines changed by other mods."
               "\n\nAre you sure you want to continue?"
               "\n\n")
         proceed_confirmation(history=None)
@@ -2097,15 +2123,20 @@ def update_mod_files():
         return
 
     try:
-        # Copy vanilla files to mod directory
-        shutil.copy(defines_van_file_path, defines_mod_file_path)
+        # Defines merge key by key, so MPP only ships the two keys it changes.
+        # Copying the whole vanilla 00_defines.txt reset every define changed by
+        # other mods (e.g. Planetary Diversity) because mpp_ loads after them.
+        write_mpp_defines(defines_mod_file_path, ethos_max_points, civic_points_base)
+
+        # Species archetypes need the full blocks, so refresh them from vanilla
+        # but keep the mechanical (ROBOT) values Flex Script does not customise.
+        robot_values = read_variables(species_mod_file_path, ("@robot_trait_points", "@robot_max_traits"))
         shutil.copy(species_van_file_path, species_mod_file_path)
-        print("Vanilla files copied to mod directory.", 2)
+        print("Vanilla species archetypes copied to mod directory.")
+        for key, value in robot_values.items():
+            modify_value_in_file(species_mod_file_path, key, value)
 
         # Update the mod files with current customizations
-        # Assuming modify_value_in_file function exists and works as intended
-        modify_value_in_file(defines_mod_file_path, "ETHOS_MAX_POINTS", ethos_max_points)
-        modify_value_in_file(defines_mod_file_path, "GOVERNMENT_CIVIC_POINTS_BASE", civic_points_base)
         modify_value_in_file(species_mod_file_path, "@machine_trait_points", machine_trait_points)
         modify_value_in_file(species_mod_file_path, "@machine_max_traits", machine_max_traits)
         modify_value_in_file(species_mod_file_path, "@species_trait_points", species_trait_points)
@@ -2188,7 +2219,7 @@ def upload_mod_to_steam():
     )
     changenote = read_workshop_text_file(
         workshop_changenote_name,
-        "Updated for Stellaris 4.4.* and refreshed species archetype overrides."
+        "Updated for Stellaris 4.6.* and refreshed species archetype overrides."
     )
     vdf_path = os.path.join(application_directory(), "workshop_build.vdf")
     steamcmd_path = os.environ.get("STEAMCMD_PATH", "steamcmd")
