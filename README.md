@@ -1,6 +1,6 @@
 # Flex Script v2.1.2 for Stellaris MPP
 
-Welcome to the Flex Script for the Stellaris Mod "[More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]](https://steamcommunity.com/sharedfiles/filedetails/?id=3038118849)" (MPP). This major update introduces a range of new features, optimizations, and user experience improvements, making the script more intuitive, versatile, and efficient.
+Welcome to the Flex Script for the Stellaris Mod "[More Picks and Points: Traits, Civics, Ethics [FLEX EDITION]](https://steamcommunity.com/sharedfiles/filedetails/?id=3038118849)" (MPP). This major update introduces a range of new features, optimizations, and user experience improvements, making the script more intuitive, versatile, and efficient.
 
 
 ## Features
@@ -74,6 +74,7 @@ If you encounter any issues or have questions, please [open an issue](https://gi
 ## Version History
 
 - **v2.1.3:** Stellaris 4.6 support. "Update mod files" now writes only the two MPP defines, so it no longer resets defines from other mods (Planetary Diversity bug), and keeps the mechanical trait values.
+- **v2.1.4:** New mod title without "&" and "|". Stellaris 4.6 silently skipped the mod because of the old title (the checksum stayed vanilla, so no extra points).
 - **v2.1.2:** Updates the publish workflow, Workshop description/changenote files, and Stellaris 4.4 MPP file detection.
 - **v2.1.1:** Adds SteamCMD helper scripts and publish menu support.
 - **v2.1.0:** Major overhaul with new features and optimizations.

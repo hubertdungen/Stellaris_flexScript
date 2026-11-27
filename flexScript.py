@@ -14,8 +14,8 @@ import getpass
 # Declare IDs, Versions and Mode Variables
 stellaris_id = "281990"          # This might need updating if Stellaris' game id changes
 mod_id = "3038118849"            # This is the mod id that might need updating if the Mod id changes
-flex_v = "2.1.3"                 # Flex Script version
-flex_ab_v = "2.1.3"              # The real constant version of this FS Script
+flex_v = "2.1.4"                 # Flex Script version
+flex_ab_v = "2.1.4"              # The real constant version of this FS Script
 mod_v = "1"                      # Mod version
 stellaris_v = "4.6.0"            # Designed for Stellaris Version...
 fs_set_st_v = None               # The version of "Designed for Stellaris Version" that was stored last time on the settings file  // This is intended for troubleshooting
@@ -61,7 +61,7 @@ defines_name = "00_defines.txt"                     # The name of the file "00_d
 species_arc_name = "00_species_archetypes.txt"      # The name of the file "00_species_archetypes..txt"  // in case paradox changes it's name
 defines_mod_name = None
 species_mod_arc_name = None
-workshop_title = "More Picks & Points: Traits|Civics|Ethics [FLEX EDITION]"
+workshop_title = "More Picks and Points: Traits, Civics, Ethics [FLEX EDITION]"
 workshop_description_name = "workshop_description.txt"
 workshop_changenote_name = "workshop_changenote.txt"
 
